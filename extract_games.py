@@ -28,12 +28,16 @@ def extract_games(csvfile, year):
         csvreader.next()
         for line in csvreader:
             gametime = datetime.datetime.strptime(("%s %s %s" % (line[4][:-2], line[5], year)).strip(),
-                                                  "%B %d %I:%M %p ET %Y")
+                                                  "%B %d %I:%M %p %Z %Y")
             games.append(NFLGame(line[0], line[1][1:], gametime))
     return games
 
-
+api = twitter.Api()
 
 results = api.GetUserTimeline(screen_name='Parker_Greene', include_rts=False, exclude_replies=True)
 for tweet in results:
-    print tweet.created_at
+    time = datetime.datetime.strptime(tweet.created_at, "%a %b %d %H:%M:%S +0000 %Y")
+    print time
+
+# for game in  extract_games('nfl-2015-schedule.csv', 2015):
+#     print game.time_start
