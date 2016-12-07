@@ -1,18 +1,19 @@
-import embedding
+#import embedding
 import pandas as pd
 import markov
 
 def bigram_summary():
     f = 'nfl_game_stats_2016_annotated_clean.csv'
-    partition = 0.70
-    e = embedding.Embedding(f,partition)
-    e.train('categorical_crossentropy')
-    classes, proba = e.predict()
-    proba_norm = e.normalize(proba)
+    # partition = 0.70
+    # e = embedding.Embedding(f,partition)
+    # e.train('categorical_crossentropy')
+    # classes, proba = e.predict()
+    # proba_norm = e.normalize(proba)
+
     headlines = extract_headlines(f)
     generator = markov.MarkovChain(headlines)
-    word_to_prob = {} #TODO: create word to probability dictionary
-    generator.apply_word_probabilites(word_to_prob)
+    # word_to_prob = {} #TODO: create word to probability dictionary
+    # generator.apply_word_probabilites(word_to_prob)
     print generator.generate_sentence()
 
 
@@ -28,5 +29,10 @@ def extract_headlines(csvfile):
         'game_headline','game_headline_annotated','clean_data'
     ]
     data = pd.read_csv(csvfile, names=columns, sep=',',skiprows=[0])
-    headlines = list(data['game_headline_annotated'])
+    # only take headlines with clean data field marked as 1
+    headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
+                 if data['clean_data'][i]]
+    print headlines
     return headlines
+
+bigram_summary()
