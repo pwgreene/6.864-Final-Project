@@ -23,7 +23,7 @@ class MarkovChain:
         for phrase in data:
             phrase_words = phrase.split()
             for i in range(len(phrase_words)):
-                curr_word = self.clean_word(phrase_words[i])
+                curr_word = clean_word(phrase_words[i])
                 if curr_word not in self.words:
                     self.words[curr_word] = len(self.words)
                     self.expand_transition_array()
@@ -32,7 +32,7 @@ class MarkovChain:
                 elif i == len(phrase_words)-1:
                     self.add_transtion_count(curr_word, self.end_state)
                     break
-                next_word = self.clean_word(phrase_words[i+1])
+                next_word = clean_word(phrase_words[i+1])
                 if next_word not in self.words:
                     self.words[next_word] = len(self.words)
                     self.expand_transition_array()
@@ -71,12 +71,6 @@ class MarkovChain:
             self.transitions[i] /= np.linalg.norm(self.transitions[i])
 
 
-    def clean_word(self, word):
-        if word[-1] in ",.-_'":
-            word = word[:-1]
-        word = word.lower()
-        return word
-
     def add_transtion_count(self, from_word, to_word):
         """
         increment number of transitions from from_word to to_word. Both words must be in self.words
@@ -88,6 +82,11 @@ class MarkovChain:
         self.transitions = np.column_stack([self.transitions, np.zeros((len(self.words)-1, 1))])
         self.transitions = np.vstack([self.transitions, np.zeros((1, len(self.words)))])
 
+def clean_word(word):
+        if word[-1] in ",.-_'":
+            word = word[:-1]
+        word = word.lower()
+        return word
 
 if __name__ == "__main__":
     #tests
