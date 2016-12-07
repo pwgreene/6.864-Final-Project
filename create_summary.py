@@ -10,8 +10,7 @@ def bigram_summary():
     classes, proba = e.predict()
     proba_norm = e.normalize(proba)
 
-    headlines = extract_headlines(f)
-    generator = markov.MarkovChain(headlines)
+    generator = markov.MarkovChain(e.headlines_annotated)
     print len(generator.words)
     e.normalize(proba) #TODO: create word to probability dictionary
     word_to_prob = e.word_to_prob()

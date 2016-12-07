@@ -11,6 +11,7 @@ class Embedding(object):
 
     def __init__(self,data_file,train_partition):
 
+        self.headlines_annotated = None
         x, y = self.get_data(data_file)
         self.xtrain = x[:int(floor(len(x)*train_partition))]
         self.xtest = x[int(floor(len(x)*train_partition)):]
@@ -76,6 +77,8 @@ class Embedding(object):
                     inp[name] = row[name]
                 x.append(inp)
         x = v.fit_transform(x).toarray()
+
+        self.headlines_annotated = headlines_annotated
         return (x,y)
 
     def train(self, loss, learning_rate = 0.01, epochs=20, batch_size=256):
