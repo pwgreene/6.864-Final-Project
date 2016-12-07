@@ -19,7 +19,7 @@ class Embedding(object):
         
 	def set_vocab(self,vocab):
 		self.vocab = vocab
-
+	
         # todo: modify to allow concatenation of various data files
 	def get_data(self,file):
 		
@@ -53,10 +53,7 @@ class Embedding(object):
                     output = np.zeros((vector_length))
                     headline = headline.split(' ')
                     for word in headline:
-                        if output[vocab[word]] == 0:
-                            output[vocab[word]] = 1
-                        else:
-                            output[vocab[word]] += 1
+                        output[vocab[word]] += 1
                     # apply softmax
                     output = np.array(map(lambda x: exp(x), output))
                     output = output / sum(output)
