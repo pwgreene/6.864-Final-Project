@@ -48,6 +48,7 @@ class Embedding(object):
                                 index += 1
 		self.set_vocab(vocab)
                 vector_length = len(vocab)
+
 	   	self.vocab_size = vector_length
                 for headline in headlines_annotated:
                     output = np.zeros((vector_length))
@@ -92,14 +93,24 @@ class Embedding(object):
 		return (classes,proba)
 	
 	def normalize(self,predictions):
-		norm = []
-		for p in predictions:
-			avg = np.average(p)
-			norm.append(map(lambda x: x if x >= avg else 0, p))
-		norm = np.array(norm)
-		return norm
+            norm = []
+            for p in predictions:
+            	avg = np.average(p)
+            	norm.append(map(lambda x: x if x >= avg else 0, p))
+            norm = np.array(norm)
+            self.prob = norm
 
-
+    def word_to_prob(self):
+        vocab = self.vocab
+        prob = self.prob
+        probs = []
+        for vect in prob:
+            word_to_prob = {}
+            for word in vocab:
+                word_to_prob[word] = prob[vocab[word]]
+            probs.append(word_to_prob)
+        self.word_to_prob = probs
+        return word_to_prob
 
 f = 'nfl_game_stats_2016_annotated_clean.csv'
 partition = 0.70
@@ -107,5 +118,5 @@ e = Embedding(f,partition)
 e.train('categorical_crossentropy')
 classes, proba = e.predict()
 proba_norm = e.normalize(proba)
-for p in proba_norm:
-	print p
+word_to_prob = e.word_to_prob()
+print word_to_prob
