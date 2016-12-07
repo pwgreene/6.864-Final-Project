@@ -5,6 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 from math import exp, floor
+from markov import 
 
 class Embedding(object):
 
