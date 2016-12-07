@@ -66,6 +66,8 @@ class MarkovChain:
         for word in word_to_prob.keys():
             assert word in self.words #theres a problem if the input probabilites has a word never seen before
             prob_vector[self.words[word]] = word_to_prob[word]
+        prob_vector[self.words[self.start_state]] = 1.0
+        prob_vector[self.words[self.end_state]] = 1.0
         for i in range(len(self.transitions)):
             self.transitions[i] = self.transitions[i] * prob_vector
             self.transitions[i] /= np.linalg.norm(self.transitions[i])
