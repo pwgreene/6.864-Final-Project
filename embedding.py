@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 from math import exp, floor
-#from markov import 
+from markov import clean_word
 
 class Embedding(object):
 
@@ -34,7 +34,8 @@ class Embedding(object):
                    'team_2_leader_receiving_td','game_leader_scorer','game_leader_scorer_points','game_leader_kicker','game_leader_kicker_points', \
                    'game_headline','game_headline_annotated','clean_data']
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
-        headlines_annotated = list(data['game_headline_annotated'])
+        headlines_annotated = [data['game_headline_annotated'][i] for i in \
+        range(len(data['game_headline_annotated'])) if data['clean_data'][i]]
 
         # create output y
         y = []
@@ -44,10 +45,12 @@ class Embedding(object):
         for headline in headlines_annotated:
             headline = headline.split(' ')
             for word in headline:
+                word = clean_word(word)
                 if word not in vocab:
                     vocab[word] = index
                     index += 1
         self.set_vocab(vocab)
+        print len(vocab)
         vector_length = len(vocab)
 
         self.vocab_size = vector_length
@@ -55,6 +58,7 @@ class Embedding(object):
             output = np.zeros((vector_length))
             headline = headline.split(' ')
             for word in headline:
+                word = clean_word(word)
                 output[vocab[word]] += 1
             # apply softmax
             output = np.array(map(lambda x: exp(x), output))
@@ -66,10 +70,11 @@ class Embedding(object):
         x = []
         v = DictVectorizer()
         for index, row in data.iterrows():
-            inp = {}
-            for name in columns:
-                inp[name] = row[name]
-            x.append(inp)
+            if row['clean_data'] == 1:
+                inp = {}
+                for name in columns:
+                    inp[name] = row[name]
+                x.append(inp)
         x = v.fit_transform(x).toarray()
         return (x,y)
 
@@ -111,13 +116,14 @@ class Embedding(object):
                 word_to_prob[word] = vect[vocab[word]]
             probs.append(word_to_prob)
         self.word_to_prob = probs
-        return word_to_prob
+        return probs
 
-f = 'nfl_game_stats_2016_annotated_clean.csv'
-partition = 0.70
-e = Embedding(f,partition)
-e.train('categorical_crossentropy')
-classes, proba = e.predict()
-proba_norm = e.normalize(proba)
-word_to_prob = e.word_to_prob()
-print word_to_prob
+# if __name__ == '__main__':
+    # f = 'nfl_game_stats_2016_annotated_clean.csv'
+    # partition = 0.70
+    # e = Embedding(f,partition)
+    # e.train('categorical_crossentropy')
+    # classes, proba = e.predict()
+    # proba_norm = e.normalize(proba)
+    # word_to_prob = e.word_to_prob()
+    # print word_to_prob
