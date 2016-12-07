@@ -45,7 +45,6 @@ class MarkovChain:
 
     def generate_sentence(self):
         word_list = [word for word in sorted(self.words.keys(), key=lambda x: self.words[x])]
-        print word_list
         sentence = ""
         curr_state = self.words[self.start_state]
         transitions_probs = self.transitions[self.words[self.start_state]]
@@ -56,9 +55,24 @@ class MarkovChain:
             curr_state = next_state
         return sentence
 
+    def apply_word_probabilites(self, word_to_prob):
+        """
+        each row of self.transitions becomes the (normalized) elem-wise product of that row and the cooresponding word
+        probability vector created from a dictionary mapping each word to its corresponding probability
+        :param word_to_prob: dict mapping each word in the vocab to its probability
+        :return: None. Mutates self.transitions (a numpy array)
+        """
+        prob_vector = np.zeros(len(self.words))
+        for word in word_to_prob.keys():
+            assert word in self.words #theres a problem if the input probabilites has a word never seen before
+            prob_vector[self.words[word]] = word_to_prob[word]
+        for i in range(len(self.transitions)):
+            self.transitions[i] = self.transitions[i] * prob_vector
+            self.transitions[i] /= np.linalg.norm(self.transitions[i])
+
 
     def clean_word(self, word):
-        if word[-1] in string.punctuation:
+        if word[-1] in ",.-_'":
             word = word[:-1]
         word = word.lower()
         return word
@@ -77,6 +91,13 @@ class MarkovChain:
 
 if __name__ == "__main__":
     #tests
+    #test sentence generation
     data = ["Sally sells seashells by the seashore.", "Sally did not like the other man.", "The president met with the man."]
     markov = MarkovChain(data)
     print markov.generate_sentence()
+    word_prob = {}
+    #test applying a probability vector
+    for word in markov.words.keys():
+        word_prob[word] = 1./len(markov.words)
+    markov.apply_word_probabilites(word_prob)
+    print markov.transitions
