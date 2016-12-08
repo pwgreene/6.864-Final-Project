@@ -10,9 +10,10 @@ def bigram_summary():
     classes, proba = e.predict()
     proba_norm = e.normalize(proba)
 
-    headlines = extract_headlines(f)
-    generator = markov.MarkovChain(headlines)
-    e.normalize() #TODO: create word to probability dictionary
+
+    generator = markov.MarkovChain(e.headlines_annotated)
+    print len(generator.words)
+    e.normalize(proba) #TODO: create word to probability dictionary
     word_to_prob = e.word_to_prob()
     generator.apply_word_probabilites(word_to_prob)
     print generator.generate_sentence()
@@ -36,5 +37,4 @@ def extract_headlines(csvfile):
     print headlines
     return headlines
 
-#bigram_summary()
-extract_headlines('nfl_game_stats_2016_annotated_clean.csv')
+bigram_summary()
