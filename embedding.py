@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 from math import exp, floor
-from markov import clean_word
+from utils import clean_word, extract_headlines, create_vocabulary, COLUMNS
 
 class Embedding(object):
 
@@ -26,17 +26,9 @@ class Embedding(object):
     def get_data(self,file):
 
         # data files should be of same form
-        columns = ['game_year','game_week','team_1_abbr','team_1_city','team_1_mascot','team_1_score', \
-                   'team_1_leader_passing','team_1_leader_passing_yds','team_1_leader_passing_td','team_1_leader_passing_int', \
-                   'team_1_leader_rushing','team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving', \
-                   'team_1_leader_receiving_yds','team_1_leader_receiving_td','team_2_abbr','team_2_city','team_2_mascot', \
-                   'team_2_score','team_2_leader_passing','team_2_leader_passing_yds','team_2_leader_passing_td','team_2_leader_passing_int', \
-                   'team_2_leader_rushing','team_2_leader_rushing_yds','team_2_leader_rushing_td','team_2_leader_receiving','team_2_leader_receiving_yds', \
-                   'team_2_leader_receiving_td','game_leader_scorer','game_leader_scorer_points','game_leader_kicker','game_leader_kicker_points', \
-                   'game_headline','game_headline_annotated','clean_data']
-        data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
-        headlines_annotated = [data['game_headline_annotated'][i] for i in \
-        range(len(data['game_headline_annotated'])) if data['clean_data'][i]]
+        columns = COLUMNS
+        headlines_annotated = extract_headlines(file)
+        self.set_vocab(create_vocabulary(headlines_annotated))
 
         # create output y
         y = []
