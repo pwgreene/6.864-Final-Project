@@ -1,3 +1,5 @@
+import re
+
 COLUMNS = [
         'game_year','game_week','team_1_abbr','team_1_city','team_1_mascot','team_1_score',
         'team_1_leader_passing','team_1_leader_passing_yds','team_1_leader_passing_td','team_1_leader_passing_int',
@@ -10,6 +12,8 @@ COLUMNS = [
     ]
 
 COLUMN_TO_INDEX = dict((COLUMNS[i], i) for i in range(len(COLUMNS)))
+START_SYMBOL = "/^s"
+END_SYMBOL = "/^e"
 
 def extract_headlines(csvfile):
     """
@@ -53,13 +57,31 @@ def clean_word(word):
 def substitute_values_in_headline(values, headline):
     """
     Substitute the values given in values (that correspond to COLUMNS) into the output headline
-    example: [team_1] beats [team_2] becomes
-    :param values:
-    :param headline:
-    :return:
+    example: /^s [team_1] beats [team_2] becomes Steelers beat Patriots.
+    :param values: a list of values that correspond to COLUMNS
+    :param headline: a string as output from sentence generator
+    :return: a valid sentence created from headline and values
     """
-    pass #TODO
+    pattern = "\[(.*)\]"
+    headline_as_list = headline.split()[1:] #ignore start
+    new_headline = []
+    for word in headline_as_list:
+        match = re.match(pattern, word)
+        if match:
+            column = match.group(1)
+            new_headline.append(values[COLUMN_TO_INDEX[column]])
+        else:
+            new_headline.append(word)
+    return " ".join(new_headline)
+
+
 
 if __name__ == "__main__":
     sample_headlines = ["The President met with the man", "The world is now much hotter than last year"]
     print create_vocabulary(sample_headlines)
+
+    sample_headline = "/^s [team_1_mascot] beat [team_2_mascot]"
+    sample_values = ["null" for i in range(len(COLUMNS))]
+    sample_values[COLUMN_TO_INDEX["team_1_mascot"]] = "Steelers"
+    sample_values[COLUMN_TO_INDEX["team_2_mascot"]] = "Patriots"
+    print substitute_values_in_headline(sample_values, sample_headline)

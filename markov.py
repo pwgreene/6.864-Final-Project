@@ -1,12 +1,12 @@
 import random
 import numpy as np
-from utils import clean_word
+from utils import clean_word, START_SYMBOL, END_SYMBOL
 
 class MarkovChain:
 
     def __init__(self, data=None):
-        self.start_state = "/^s"
-        self.end_state = "/^e"
+        self.start_state = START_SYMBOL
+        self.end_state = END_SYMBOL
         self.words = {self.start_state:0, self.end_state:1}
         self.transitions = np.zeros((2,2)) #self.transtions[a][b] is the prob of transitioning from a to b (nested dictionary)
         self.add_transtion_count(self.end_state, self.end_state) #so probabilities sum to 1
