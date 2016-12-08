@@ -36,5 +36,4 @@ def extract_headlines(csvfile):
                  if data['clean_data'][i]]
     return headlines
 
-#bigram_summary()
-extract_headlines('nfl_game_stats_2016_annotated_clean.csv')
+bigram_summary()

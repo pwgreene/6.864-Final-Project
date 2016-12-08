@@ -62,15 +62,19 @@ class MarkovChain:
         :param word_to_prob: dict mapping each word in the vocab to its probability
         :return: None. Mutates self.transitions (a numpy array)
         """
+        alpha = 10e-6
         prob_vector = np.zeros(len(self.words))
         for word in word_to_prob.keys():
             assert word in self.words #theres a problem if the input probabilites has a word never seen before
-            prob_vector[self.words[word]] = word_to_prob[word]
+            prob_vector[self.words[word]] = word_to_prob[word] + alpha
         prob_vector[self.words[self.start_state]] = 1.0
         prob_vector[self.words[self.end_state]] = 1.0
         for i in range(len(self.transitions)):
+            #print 'before', self.transitions[i]
             self.transitions[i] = self.transitions[i] * prob_vector
-            self.transitions[i] /= np.linalg.norm(self.transitions[i])
+            #print np.linalg.norm(self.transitions[i])
+            self.transitions[i] /= sum(self.transitions[i])
+            #print self.transitions[i]
 
 
     def add_transtion_count(self, from_word, to_word):
