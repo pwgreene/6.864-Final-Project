@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import string
+from utils import clean_word
 
 class MarkovChain:
 
@@ -83,12 +83,6 @@ class MarkovChain:
     def expand_transition_array(self):
         self.transitions = np.column_stack([self.transitions, np.zeros((len(self.words)-1, 1))])
         self.transitions = np.vstack([self.transitions, np.zeros((1, len(self.words)))])
-
-def clean_word(word):
-        if word[-1] in ",.-_'":
-            word = word[:-1]
-        word = word.lower()
-        return word
 
 if __name__ == "__main__":
     #tests
