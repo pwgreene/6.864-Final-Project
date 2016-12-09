@@ -3,7 +3,7 @@ import pandas as pd
 import markov
 
 def bigram_summary():
-    f = 'nfl_game_stats_2016_annotated_clean.csv'
+    f = 'data/nfl_game_stats_2016_annotated_clean.csv'
     partition = 0.70
     e = embedding.Embedding(f,partition)
     e.train('categorical_crossentropy')
