@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k}{CREATE} \PYGdefault{k}{TABLE} \PYGdefault{n}{Local\PYGdefaultZus{}AP} \PYGdefault{p}{(}
+  \PYGdefault{n}{address} \PYGdefault{n+nb}{VARCHAR}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{12}\PYGdefault{p}{),}
+  \PYGdefault{n}{local\PYGdefaultZus{}APs} \PYGdefault{n+nb}{VARCHAR}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{12}\PYGdefault{p}{)} \PYGdefault{n}{MULTISET}\PYGdefault{p}{);}
+\end{Verbatim}

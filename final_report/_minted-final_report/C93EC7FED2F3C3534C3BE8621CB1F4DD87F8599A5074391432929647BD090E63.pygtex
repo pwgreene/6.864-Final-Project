@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k}{SELECT} \PYGdefault{n}{local\PYGdefaultZus{}aps}
+  \PYGdefault{k}{FROM} \PYGdefault{n}{Local\PYGdefaultZus{}AP}
+  \PYGdefault{k}{WHERE} \PYGdefault{n}{address}\PYGdefault{o}{=}\PYGdefault{l+s+s1}{\PYGdefaultZsq{}01\PYGdefaultZhy{}23\PYGdefaultZhy{}45\PYGdefaultZhy{}67\PYGdefaultZhy{}89\PYGdefaultZhy{}ab\PYGdefaultZsq{}}\PYGdefault{p}{;}
+\end{Verbatim}

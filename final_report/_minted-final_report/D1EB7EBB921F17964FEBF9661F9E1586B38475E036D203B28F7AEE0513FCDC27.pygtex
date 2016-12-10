@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k}{def} \PYGdefault{n+nf}{score\PYGdefaultZus{}client}\PYGdefault{p}{(}\PYGdefault{n}{c}\PYGdefault{p}{):}
+  \PYGdefault{n}{desired\PYGdefaultZus{}data\PYGdefaultZus{}rate} \PYGdefault{o}{=} \PYGdefault{n}{c}\PYGdefault{p}{[}\PYGdefault{l+s}{\PYGdefaultZsq{}data\PYGdefaultZsq{}}\PYGdefault{p}{]}
+  \PYGdefault{n}{acceptable\PYGdefaultZus{}aps} \PYGdefault{o}{=} \PYGdefault{p}{[}\PYGdefault{n}{a} \PYGdefault{k}{for} \PYGdefault{n}{a} \PYGdefault{o+ow}{in} \PYGdefault{n}{c}\PYGdefault{p}{[}\PYGdefault{l+s}{\PYGdefaultZsq{}aps\PYGdefaultZsq{}}\PYGdefault{p}{]} \PYGdefault{k}{if} \PYGdefault{n}{free\PYGdefaultZus{}space}\PYGdefault{p}{(}\PYGdefault{n}{a}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZgt{}} \PYGdefault{n}{desired\PYGdefaultZus{}data\PYGdefaultZus{}rate}\PYGdefault{p}{]}
+  \PYGdefault{k}{return} \PYGdefault{n+nb}{max}\PYGdefault{p}{(}\PYGdefault{n+nb}{map}\PYGdefault{p}{(}\PYGdefault{n}{congestion}\PYGdefault{p}{,} \PYGdefault{n}{acceptable\PYGdefaultZus{}aps}\PYGdefault{p}{))}
+\end{Verbatim}

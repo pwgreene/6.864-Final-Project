@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k}{CREATE} \PYGdefault{k}{TABLE} \PYGdefault{n}{Congestion} \PYGdefault{p}{(}
+  \PYGdefault{n}{address} \PYGdefault{n+nb}{VARCHAR}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{12}\PYGdefault{p}{),}
+  \PYGdefault{n}{bytes\PYGdefaultZus{}utilized} \PYGdefault{n+nb}{BIGINT}\PYGdefault{p}{,}
+  \PYGdefault{n}{capacity} \PYGdefault{n+nb}{BIGINT}\PYGdefault{p}{,}
+  \PYGdefault{n}{congestion} \PYGdefault{n+nb}{BIGINT}\PYGdefault{p}{);}
+\end{Verbatim}
