@@ -42,11 +42,18 @@ def extract_column(csvfile, column=None):
     """
 
     output_data = []
-    for f in csvfile:
-        data = pd.read_csv(f, names=COLUMNS, sep=',',skiprows=[0])
+    if type(csvfile) == list:
+        for f in csvfile:
+            data = pd.read_csv(f, names=COLUMNS, sep=',',skiprows=[0])
+            # only take headlines with clean data field marked as 1
+            column_data = [data[column][i] for i in range(len(data[column]))
+                         if data['clean_data'][i]]
+            output_data.extend(column_data)
+    else:
+        data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
         # only take headlines with clean data field marked as 1
         column_data = [data[column][i] for i in range(len(data[column]))
-                     if data['clean_data'][i]]
+                       if data['clean_data'][i]]
         output_data.extend(column_data)
     return output_data
 
