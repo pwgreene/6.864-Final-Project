@@ -12,7 +12,7 @@ data_filenames = ['data/nfl_game_stats_2009_annotated_clean.csv', 'data/nfl_game
                   'data/nfl_game_stats_2011_annotated_clean.csv', 'data/nfl_game_stats_2012_annotated_clean.csv',
                   'data/nfl_game_stats_2013_annotated_clean.csv', 'data/nfl_game_stats_2014_annotated_clean.csv',
                   'data/nfl_game_stats_2015_annotated_clean.csv', 'data/nfl_game_stats_2016_annotated_clean.csv']
-headlines = utils.extract_headlines(data_filenames)
+headlines = utils.extract_column(data_filenames, 'game_headline_annotated')
 
 def split_by_chars():
     vocab = utils.create_char_vocabulary(headlines)
