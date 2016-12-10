@@ -1,0 +1,10 @@
+qb touchdowns - there are only a few possibilities so this would should include without modification
+
+bag of words frequencies to 1-hot
+
+1. we create a transition matrix based on headlines that contain top n keywords by probability, select headlines by combinations
+2. don't do bag of words frequencies on all words, create a model that goes from stats features to 0/1 of keywords, maybe logistic regression
+3. look into how we seed the start word, end word
+4. feature engineering
+5. incoporate new data
+6. clean word fix a's
