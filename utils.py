@@ -31,7 +31,7 @@ def keywords():
         keywords.append('[' + keyword + ']')
     return keywords
 
-def extract(csvfile, column):
+def extract_headlines(csvfile, column):
     """
     :param csvfile: either a single csv file or list of files formatted with columns labeled COLUMNS
     :return: the headlines (list(str))
