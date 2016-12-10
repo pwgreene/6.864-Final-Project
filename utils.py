@@ -31,22 +31,18 @@ def keywords():
         keywords.append('[' + keyword + ']')
     return keywords
 
-def extract_headlines(csvfile, column):
+def extract_column(csvfile, column=None):
     """
     :param csvfile: either a single csv file or list of files formatted with columns labeled COLUMNS
     :return: the headlines (list(str))
     """
-    headlines = []
-    if type(csvfile) == list:
-        for f in csvfile:
-            headlines.extend(extract_headlines(f))
-        return headlines
-    else:
+    output_data = []
+    for f in csvfile:
         data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
         # only take headlines with clean data field marked as 1
-        headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
+        column_data = [data[column][i] for i in range(len(data[column]))
                      if data['clean_data'][i]]
-        return headlines
+        output_data.extend(column_data)
 
 def create_vocabulary(headlines):
     """
