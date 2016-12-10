@@ -13,18 +13,16 @@ def bigram_summary():
 
 
     # print len(generator.words)
-    e.normalize()
+    e.normalize(proba)
     keyword = e.norm
-    #word_to_prob = e.word_to_prob()
-    # for i in range(len(word_to_prob)):
-    #     if i == 1:
-    #         w_to_prob = sorted(word_to_prob[i].items(), key=lambda x: x[1])[-10:]
-    #         print w_to_prob
-    #         generator.apply_word_probabilites(word_to_prob[i])
-    #         print generator.generate_sentence()
-    for i in range(len(keyword)):
-        data = prune(e.headlines_annotated, keyword[i])
-        generator = markov.MarkovChain(data)
+    word_to_prob = e.word_to_prob()
+    generator = markov.MarkovChain(e.headlines_annotated)
+
+    for i in range(len(word_to_prob)):
+        w_to_prob = sorted(word_to_prob[i].items(), key=lambda x: x[1])[-10:]
+        generator.apply_word_probabilites(word_to_prob[i])
+        # print generator.generate_sentence()
+
         # print proba_norm[i]
     # generator.apply_word_probabilites(word_to_prob)
     # print generator.generate_sentence()
@@ -45,7 +43,6 @@ def extract_headlines(csvfile):
     # only take headlines with clean data field marked as 1
     headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
                  if data['clean_data'][i]]
-    print headlines
     return headlines
 
 bigram_summary()
