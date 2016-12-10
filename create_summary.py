@@ -3,7 +3,7 @@ import pandas as pd
 import markov
 
 def bigram_summary():
-    f = 'nfl_game_stats_2016_annotated_clean.csv'
+    f = 'nfl_game_stats_annotated_clean.csv'
     partition = 0.7
     e = embedding.Embedding(f,partition)
     e.train('categorical_crossentropy')
@@ -11,12 +11,16 @@ def bigram_summary():
     proba_norm = e.normalize(proba)
 
     generator = markov.MarkovChain(e.headlines_annotated)
-    print len(generator.words)
+    # print len(generator.words)
     e.normalize(proba) #TODO: create word to probability dictionary
     word_to_prob = e.word_to_prob()
     for i in range(len(word_to_prob)):
-        generator.apply_word_probabilites(word_to_prob[i])
-        print generator.generate_sentence()
+        if i == 1:
+            w_to_prob = sorted(word_to_prob[i].items(), key=lambda x: x[1])[-10:]
+            print w_to_prob
+            generator.apply_word_probabilites(word_to_prob[i])
+            print generator.generate_sentence()
+        # print proba_norm[i]
 
 
 def extract_headlines(csvfile):

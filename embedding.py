@@ -7,6 +7,13 @@ from keras.optimizers import SGD
 from math import exp, floor
 from markov import clean_word
 
+def strat(val,ranges):
+    for i in range(1,len(ranges)):
+        lo, hi = ranges[i-1], ranges[i]
+        if val > lo and val <= hi:
+            return i-1
+    return len(ranges)-1
+
 class Embedding(object):
 
     def __init__(self,data_file,train_partition):
@@ -17,7 +24,6 @@ class Embedding(object):
         self.xtest = x[int(floor(len(x)*train_partition)):]
         self.ytrain = y[:int(floor(len(y)*train_partition))]
         self.ytest = y[int(floor(len(y)*train_partition)):]
-
 
     def set_vocab(self,vocab):
         self.vocab = vocab
@@ -33,7 +39,14 @@ class Embedding(object):
                    'team_2_score','team_2_leader_passing','team_2_leader_passing_yds','team_2_leader_passing_td','team_2_leader_passing_int', \
                    'team_2_leader_rushing','team_2_leader_rushing_yds','team_2_leader_rushing_td','team_2_leader_receiving','team_2_leader_receiving_yds', \
                    'team_2_leader_receiving_td','game_leader_scorer','game_leader_scorer_points','game_leader_kicker','game_leader_kicker_points', \
-                   'game_headline','game_headline_annotated','clean_data']
+                   'game_headline','game_headline_annotated','clean_data','team_score_diff']
+        columns_stats = ['team_1_score', 'team_1_leader_passing_yds','team_1_leader_passing_td','team_1_leader_passing_int', \
+                   'team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving_yds','team_1_leader_receiving_td', \
+                   'team_2_score','team_2_leader_passing_yds','team_2_leader_passing_td','team_2_leader_passing_int', \
+                   'team_2_leader_rushing_yds','team_2_leader_rushing_td','team_2_leader_receiving_yds', \
+                   'team_2_leader_receiving_td','game_leader_scorer_points','game_leader_kicker_points', 'team_score_diff']
+        columns_test = ['team_1_leader_passing_td','team_1_leader_passing_yds','game_leader_kicker_points','game_leader_scorer_points','team_1_leader_passing_int', \
+        'team_2_leader_passing_int','team_score_diff',]
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
         headlines_annotated = [data['game_headline_annotated'][i] for i in \
         range(len(data['game_headline_annotated'])) if data['clean_data'][i]]
@@ -51,7 +64,7 @@ class Embedding(object):
                     vocab[word] = index
                     index += 1
         self.set_vocab(vocab)
-        print len(vocab)
+        # print len(vocab)
         vector_length = len(vocab)
 
         self.vocab_size = vector_length
@@ -72,11 +85,33 @@ class Embedding(object):
         v = DictVectorizer()
         for index, row in data.iterrows():
             if row['clean_data'] == 1:
-                inp = {}
-                for name in columns:
-                    inp[name] = row[name]
+                inp = []
+                # modify columns_stats to use
+                for name in columns_test:
+                    if name == 'team_1_leader_passing_yds':
+                        num_buckets = 11
+                        yd_buckets = [0] * (num_buckets)
+                        index = strat(row[name],[0,50,100,150,200,250,300,350,400,450,500])
+                        yd_buckets[index] = 1
+                        inp.extend(yd_buckets)
+                    elif name == 'game_leader_kicker_points' or name == 'game_leader_scorer_points':
+                        num_buckets = 4
+                        pt_buckets = [0]*(num_buckets)
+                        index = strat(row[name],range(0,num_buckets))
+                        pt_buckets[index] = 1
+                        inp.extend(pt_buckets)
+                    elif name == 'team_score_diff':
+                        num_buckets = 5
+                        score_diff = abs(row['team_1_score']-row['team_2_score'])
+                        score_buckets = [0] * (num_buckets)
+                        index = strat(score_diff, [0,2,7,14,21])
+                        score_buckets[index] = 1
+                        inp.extend(score_buckets)
+                    else:
+                        inp.append(row[name])
+
                 x.append(inp)
-        x = v.fit_transform(x).toarray()
+        # x = v.fit_transform(x).toarray()
 
         self.headlines_annotated = headlines_annotated
         return (x,y)
@@ -99,6 +134,8 @@ class Embedding(object):
     def predict(self):
         classes = self.model.predict_classes(self.xtest)
         proba = self.model.predict_proba(self.xtest)
+        print proba
+        self.prob = proba
         return (classes,proba)
 
     def normalize(self,predictions):
@@ -108,12 +145,15 @@ class Embedding(object):
             norm.append(map(lambda x: x if x >= avg else 0, p))
         norm = np.array(norm)
         self.norm = norm
+        return norm
 
     def word_to_prob(self):
         vocab = self.vocab
         norm = self.norm
+        prob = self.prob
         probs = []
-        for vect in norm:
+        # either for vector in prob, or norm
+        for vect in prob:
             word_to_prob = {}
             for word in vocab:
                 word_to_prob[word] = vect[vocab[word]]
@@ -121,12 +161,12 @@ class Embedding(object):
         self.word_to_prob = probs
         return probs
 
-# if __name__ == '__main__':
-    # f = 'nfl_game_stats_2016_annotated_clean.csv'
-    # partition = 0.70
-    # e = Embedding(f,partition)
-    # e.train('categorical_crossentropy')
-    # classes, proba = e.predict()
+if __name__ == '__main__':
+    f = 'nfl_game_stats_annotated_clean.csv'
+    partition = 0.70
+    e = Embedding(f,partition)
+    e.train('categorical_crossentropy')
+    classes, proba = e.predict()
+    print proba
     # proba_norm = e.normalize(proba)
     # word_to_prob = e.word_to_prob()
-    # print word_to_prob

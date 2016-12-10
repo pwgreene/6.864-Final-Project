@@ -94,15 +94,15 @@ def clean_word(word):
         word = word.lower()
         return word
 
-if __name__ == "__main__":
-    #tests
-    #test sentence generation
-    data = ["Sally sells seashells by the seashore.", "Sally did not like the other man.", "The president met with the man."]
-    markov = MarkovChain(data)
-    # print markov.generate_sentence()
-    word_prob = {}
-    #test applying a probability vector
-    for word in markov.words.keys():
-        word_prob[word] = 1./len(markov.words)
-    markov.apply_word_probabilites(word_prob)
-    # print markov.transitions
+# if __name__ == "__main__":
+#     #tests
+#     #test sentence generation
+#     data = ["Sally sells seashells by the seashore.", "Sally did not like the other man.", "The president met with the man."]
+#     markov = MarkovChain(data)
+#     # print markov.generate_sentence()
+#     word_prob = {}
+#     #test applying a probability vector
+#     for word in markov.words.keys():
+#         word_prob[word] = 1./len(markov.words)
+#     markov.apply_word_probabilites(word_prob)
+#     print markov.transitions
