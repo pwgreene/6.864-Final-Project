@@ -1,4 +1,5 @@
 import re
+import pandas as pd
 
 COLUMNS = [
         'game_year','game_week','team_1_abbr','team_1_city','team_1_mascot','team_1_score',
@@ -12,20 +13,27 @@ COLUMNS = [
     ]
 
 COLUMN_TO_INDEX = dict((COLUMNS[i], i) for i in range(len(COLUMNS)))
-START_SYMBOL = "/^s"
-END_SYMBOL = "/^e"
+START_SYMBOL = "$"
+END_SYMBOL = "@"
+START_WORD = "/^s"
+END_WORD = "/^e"
 
 def extract_headlines(csvfile):
     """
-    :param csvfile: a csv formatted file with columns labeled COLUMNS
+    :param csvfile: either a single csv file or list of files formatted with columns labeled COLUMNS
     :return: the headlines (list(str))
     """
-
-    data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
-    # only take headlines with clean data field marked as 1
-    headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
-                 if data['clean_data'][i]]
-    return headlines
+    headlines = []
+    if type(csvfile) == list:
+        for f in csvfile:
+            headlines.extend(extract_headlines(f))
+        return headlines
+    else:
+        data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
+        # only take headlines with clean data field marked as 1
+        headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
+                     if data['clean_data'][i]]
+        return headlines
 
 def create_vocabulary(headlines):
     """
@@ -41,6 +49,16 @@ def create_vocabulary(headlines):
             if word not in vocab:
                 vocab[word] = len(vocab)
     return vocab
+
+def create_char_vocabulary(headlines):
+    """
+    same as create_vocabulary except vocab is characters instead of words
+    :param headlines: list(str) of headlines
+    :return: dict{str:int} a dictionary mapping unique character to a unique int
+    """
+    headline_str = " ".join(headlines)
+    chars = sorted(list(set(headline_str)))
+    return dict((char, i) for i, char in enumerate(chars))
 
 def clean_word(word):
     """
