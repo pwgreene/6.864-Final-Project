@@ -39,13 +39,13 @@ def extract(csvfile, column):
     headlines = []
     if type(csvfile) == list:
         for f in csvfile:
-            headlines.extend(extract_headlines(f))
+            headlines.extend(extract(f, column))
         return headlines
     else:
         data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
         # only take headlines with clean data field marked as 1
-        headlines = [data['game_headline_annotated'][i] for i in range(len(data['game_headline_annotated']))
-                     if data['clean_data'][i]]
+        headlines = [data[column][i] for i in range(len(data[column]))
+                     if data[column][i]]
         return headlines
 
 def create_vocabulary(headlines):

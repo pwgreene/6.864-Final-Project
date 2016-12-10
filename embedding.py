@@ -39,6 +39,7 @@ class Embedding(object):
 
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
         headlines_annotated = extract(file, 'game_headline_annotated')
+
         self.set_vocab(create_vocabulary(headlines_annotated))
 
         # create output y
@@ -69,7 +70,6 @@ class Embedding(object):
 
         # create input x
         x = []
-        v = DictVectorizer()
         for index, row in data.iterrows():
             if row['clean_data'] == 1:
                 inp = []
@@ -98,6 +98,7 @@ class Embedding(object):
                         inp.append(row[name])
 
                 x.append(inp)
+
         # x = v.fit_transform(x).toarray()
 
         self.headlines_annotated = headlines_annotated
@@ -135,7 +136,6 @@ class Embedding(object):
         #     norm.append(map(lambda x: x if x >= avg else 0, p))
         # Approach 3
         for p in self.prob:
-            print p
             norm.append(map(lambda x: 1 if x >= 0.80 else 0, p))
         norm = np.array(norm)
         self.norm = norm
@@ -156,12 +156,18 @@ class Embedding(object):
         return probs
 
 if __name__ == '__main__':
-    f = 'nfl_game_stats_annotated_clean.csv'
+    f = 'data/nfl_game_stats_annotated_clean.csv'
     partition = 0.70
     e = Embedding(f,partition)
     e.train('categorical_crossentropy')
     classes, proba = e.predict()
     e.normalize()
-    print e.norm
+
+    # last = e.norm[-1]
+    # for i in range(len(keywords())):
+    #     if i == 1:
+    #         print last[i]
+
+    # print e.norm
     # proba_norm = e.normalize(proba)
     # word_to_prob = e.word_to_prob()
