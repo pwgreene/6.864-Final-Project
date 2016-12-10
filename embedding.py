@@ -7,7 +7,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 
-from utils import clean_word, extract, create_vocabulary, COLUMNS, STATS_COLUMNS, strat, keywords
+from utils import clean_word, extract_column, create_vocabulary, COLUMNS, STATS_COLUMNS, strat, keywords
 
 np.set_printoptions(edgeitems=100, threshold=10000)
 
@@ -38,7 +38,7 @@ class Embedding(object):
         'team_2_leader_passing_int','team_score_diff']
 
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
-        headlines_annotated = extract(file, 'game_headline_annotated')
+        headlines_annotated = extract_column([file], 'game_headline_annotated')
 
         self.set_vocab(create_vocabulary(headlines_annotated))
 
@@ -58,6 +58,7 @@ class Embedding(object):
         # Approach 2: 0/1 words
         # Approach 3: 0/1 Keywords
         KEYWORDS = keywords()
+        print len(headlines_annotated)
         for headline in headlines_annotated:
             output = np.zeros((len(KEYWORDS)))
             headline = headline.split(' ')
@@ -67,6 +68,7 @@ class Embedding(object):
                     output[KEYWORDS.index(word)] = 1
             y.append(output)
         y = np.array(y)
+        print len(y)
 
         # create input x
         x = []
@@ -98,6 +100,7 @@ class Embedding(object):
                         inp.append(row[name])
 
                 x.append(inp)
+        print x
 
         # x = v.fit_transform(x).toarray()
 
@@ -108,12 +111,9 @@ class Embedding(object):
         input_size = len(self.xtrain[0])
         self.vocab_size = len(self.vocab)
         model = Sequential()
-        model.add(Dense(2*input_size,input_dim=input_size))
+        model.add(Dense(input_size,input_dim=input_size))
         model.add(Activation('relu'))
-        model.add(Dropout(0.25))
-        model.add(Dense(2*input_size))
-        model.add(Activation('relu'))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.50))
         model.add(Dense(len(keywords())))
         model.add(Activation('sigmoid'))
         sgd = SGD(lr=learning_rate)
@@ -124,7 +124,7 @@ class Embedding(object):
 
     def predict(self):
         classes = self.model.predict_classes(self.xtest)
-        proba = self.model.predict_proba(self.xtest)
+        proba = self.model.predict(self.xtest)
         self.prob = proba
         return (classes,proba)
 
@@ -136,7 +136,7 @@ class Embedding(object):
         #     norm.append(map(lambda x: x if x >= avg else 0, p))
         # Approach 3
         for p in self.prob:
-            norm.append(map(lambda x: 1 if x >= 0.80 else 0, p))
+            norm.append(map(lambda x: 1 if x >= 0.65 else 0, p))
         norm = np.array(norm)
         self.norm = norm
         return norm
@@ -163,10 +163,12 @@ if __name__ == '__main__':
     classes, proba = e.predict()
     e.normalize()
 
-    # last = e.norm[-1]
-    # for i in range(len(keywords())):
-    #     if i == 1:
-    #         print last[i]
+    last = e.norm[-4]
+
+    for i in range(len(last)):
+        if last[i] == 1:
+            print keywords()[i]
+
 
     # print e.norm
     # proba_norm = e.normalize(proba)

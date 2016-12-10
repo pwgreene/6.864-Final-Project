@@ -31,22 +31,20 @@ def keywords():
         keywords.append('[' + keyword + ']')
     return keywords
 
-def extract(csvfile, column):
+def extract_column(csvfile, column=None):
     """
     :param csvfile: either a single csv file or list of files formatted with columns labeled COLUMNS
     :return: the headlines (list(str))
     """
-    headlines = []
-    if type(csvfile) == list:
-        for f in csvfile:
-            headlines.extend(extract(f, column))
-        return headlines
-    else:
-        data = pd.read_csv(csvfile, names=COLUMNS, sep=',',skiprows=[0])
+
+    output_data = []
+    for f in csvfile:
+        data = pd.read_csv(f, names=COLUMNS, sep=',',skiprows=[0])
         # only take headlines with clean data field marked as 1
-        headlines = [data[column][i] for i in range(len(data[column]))
-                     if data[column][i]]
-        return headlines
+        column_data = [data[column][i] for i in range(len(data[column]))
+                     if data['clean_data'][i]]
+        output_data.extend(column_data)
+    return output_data
 
 def create_vocabulary(headlines):
     """
@@ -132,6 +130,42 @@ def prune(keywords, data):
                 sentences.append(p)
                 break
     return sentences
+
+def get_features(self,file):
+
+    data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
+
+    # create input x
+    x = []
+    for index, row in data.iterrows():
+        if row['clean_data'] == 1:
+            inp = []
+            # modify columns_stats to use
+            for name in columns_test:
+                if name == 'team_1_leader_passing_yds':
+                    num_buckets = 11
+                    yd_buckets = [0] * (num_buckets)
+                    index = strat(row[name],[0,50,100,150,200,250,300,350,400,450,500])
+                    yd_buckets[index] = 1
+                    inp.extend(yd_buckets)
+                elif name == 'game_leader_kicker_points' or name == 'game_leader_scorer_points':
+                    num_buckets = 4
+                    pt_buckets = [0]*(num_buckets)
+                    index = strat(row[name],range(0,num_buckets))
+                    pt_buckets[index] = 1
+                    inp.extend(pt_buckets)
+                elif name == 'team_score_diff':
+                    num_buckets = 5
+                    score_diff = abs(row['team_1_score']-row['team_2_score'])
+                    score_buckets = [0] * (num_buckets)
+                    index = strat(score_diff, [0,2,7,14,21])
+                    score_buckets[index] = 1
+                    inp.extend(score_buckets)
+                else:
+                    inp.append(row[name])
+
+            x.append(inp)
+    return x
             
 
 if __name__ == "__main__":
