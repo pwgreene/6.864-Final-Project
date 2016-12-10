@@ -1,82 +1,69 @@
-import pandas as pd
+from math import exp, floor
 import numpy as np
+import pandas as pd
 from sklearn.feature_extraction import DictVectorizer
+
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
-from math import exp, floor
-from markov import clean_word
 
-def strat(val,ranges):
-    for i in range(1,len(ranges)):
-        lo, hi = ranges[i-1], ranges[i]
-        if val > lo and val <= hi:
-            return i-1
-    return len(ranges)-1
+from utils import clean_word, extract, create_vocabulary, COLUMNS, STATS_COLUMNS, strat, keywords
+
+np.set_printoptions(edgeitems=100, threshold=10000)
 
 class Embedding(object):
 
     def __init__(self,data_file,train_partition):
 
-        self.headlines_annotated = None
         x, y = self.get_data(data_file)
         self.xtrain = x[:int(floor(len(x)*train_partition))]
         self.xtest = x[int(floor(len(x)*train_partition)):]
         self.ytrain = y[:int(floor(len(y)*train_partition))]
         self.ytest = y[int(floor(len(y)*train_partition)):]
+        self.headlines_annotated = None
 
     def set_vocab(self,vocab):
-        self.vocab = vocab
 
-    # todo: modify to allow concatenation of various data files
+        self.vocab = vocab
+        self.vocab_size = len(vocab)
+
     def get_data(self,file):
 
         # data files should be of same form
-        columns = ['game_year','game_week','team_1_abbr','team_1_city','team_1_mascot','team_1_score', \
-                   'team_1_leader_passing','team_1_leader_passing_yds','team_1_leader_passing_td','team_1_leader_passing_int', \
-                   'team_1_leader_rushing','team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving', \
-                   'team_1_leader_receiving_yds','team_1_leader_receiving_td','team_2_abbr','team_2_city','team_2_mascot', \
-                   'team_2_score','team_2_leader_passing','team_2_leader_passing_yds','team_2_leader_passing_td','team_2_leader_passing_int', \
-                   'team_2_leader_rushing','team_2_leader_rushing_yds','team_2_leader_rushing_td','team_2_leader_receiving','team_2_leader_receiving_yds', \
-                   'team_2_leader_receiving_td','game_leader_scorer','game_leader_scorer_points','game_leader_kicker','game_leader_kicker_points', \
-                   'game_headline','game_headline_annotated','clean_data','team_score_diff']
-        columns_stats = ['team_1_score', 'team_1_leader_passing_yds','team_1_leader_passing_td','team_1_leader_passing_int', \
-                   'team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving_yds','team_1_leader_receiving_td', \
-                   'team_2_score','team_2_leader_passing_yds','team_2_leader_passing_td','team_2_leader_passing_int', \
-                   'team_2_leader_rushing_yds','team_2_leader_rushing_td','team_2_leader_receiving_yds', \
-                   'team_2_leader_receiving_td','game_leader_scorer_points','game_leader_kicker_points', 'team_score_diff']
+        columns = COLUMNS
+        columns_stats = STATS_COLUMNS
+
+        # for experimenting with different feature combination
         columns_test = ['team_1_leader_passing_td','team_1_leader_passing_yds','game_leader_kicker_points','game_leader_scorer_points','team_1_leader_passing_int', \
-        'team_2_leader_passing_int','team_score_diff',]
+        'team_2_leader_passing_int','team_score_diff']
+
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
-        headlines_annotated = [data['game_headline_annotated'][i] for i in \
-        range(len(data['game_headline_annotated'])) if data['clean_data'][i]]
+        headlines_annotated = extract(file, 'game_headline_annotated')
+        self.set_vocab(create_vocabulary(headlines_annotated))
 
         # create output y
         y = []
-        vocab = {}
-        index = 0
-        # get vocabulary to have indices of words
+        # Approach 1: frequency counts of words, then softmax
+        # for headline in headlines_annotated:
+        #     output = np.zeros((self.vocab_size))
+        #     headline = headline.split(' ')
+        #     for word in headline:
+        #         word = clean_word(word)
+        #         output[self.vocab[word]] += 1
+        #     # apply softmax
+        #     output = np.array(map(lambda x: exp(x), output))
+        #     output = output / sum(output)
+        #     y.append(output)
+        # Approach 2: 0/1 words
+        # Approach 3: 0/1 Keywords
+        KEYWORDS = keywords()
         for headline in headlines_annotated:
+            output = np.zeros((len(KEYWORDS)))
             headline = headline.split(' ')
             for word in headline:
                 word = clean_word(word)
-                if word not in vocab:
-                    vocab[word] = index
-                    index += 1
-        self.set_vocab(vocab)
-        # print len(vocab)
-        vector_length = len(vocab)
-
-        self.vocab_size = vector_length
-        for headline in headlines_annotated:
-            output = np.zeros((vector_length))
-            headline = headline.split(' ')
-            for word in headline:
-                word = clean_word(word)
-                output[vocab[word]] += 1
-            # apply softmax
-            output = np.array(map(lambda x: exp(x), output))
-            output = output / sum(output)
+                if word in KEYWORDS:
+                    output[KEYWORDS.index(word)] = 1
             y.append(output)
         y = np.array(y)
 
@@ -123,8 +110,11 @@ class Embedding(object):
         model.add(Dense(2*input_size,input_dim=input_size))
         model.add(Activation('relu'))
         model.add(Dropout(0.25))
-        model.add(Dense(self.vocab_size))
-        model.add(Activation('softmax'))
+        model.add(Dense(2*input_size))
+        model.add(Activation('relu'))
+        model.add(Dropout(0.25))
+        model.add(Dense(len(keywords())))
+        model.add(Activation('sigmoid'))
         sgd = SGD(lr=learning_rate)
         model.compile(loss=loss, optimizer=sgd)
         model.fit(self.xtrain, self.ytrain, nb_epoch = epochs, batch_size=batch_size)
@@ -134,15 +124,19 @@ class Embedding(object):
     def predict(self):
         classes = self.model.predict_classes(self.xtest)
         proba = self.model.predict_proba(self.xtest)
-        print proba
         self.prob = proba
         return (classes,proba)
 
-    def normalize(self,predictions):
+    def normalize(self):
         norm = []
-        for p in predictions:
-            avg = np.average(p)
-            norm.append(map(lambda x: x if x >= avg else 0, p))
+        # Approach 1:
+        # for p in predictions:
+        #     avg = np.average(p)
+        #     norm.append(map(lambda x: x if x >= avg else 0, p))
+        # Approach 3
+        for p in self.prob:
+            print p
+            norm.append(map(lambda x: 1 if x >= 0.80 else 0, p))
         norm = np.array(norm)
         self.norm = norm
         return norm
@@ -167,6 +161,7 @@ if __name__ == '__main__':
     e = Embedding(f,partition)
     e.train('categorical_crossentropy')
     classes, proba = e.predict()
-    print proba
+    e.normalize()
+    print e.norm
     # proba_norm = e.normalize(proba)
     # word_to_prob = e.word_to_prob()
