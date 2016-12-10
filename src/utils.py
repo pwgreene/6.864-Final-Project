@@ -19,6 +19,10 @@ STATS_COLUMNS = [
         'team_2_leader_receiving_td','game_leader_scorer_points','game_leader_kicker_points', 'team_score_diff'
     ]
 
+# for experimenting with different feature combination
+COLUMNS_TEST = ['team_1_leader_passing_td','team_1_leader_passing_yds','game_leader_kicker_points',
+                'game_leader_scorer_points','team_1_leader_passing_int', 'team_2_leader_passing_int','team_score_diff']
+
 COLUMN_TO_INDEX = dict((COLUMNS[i], i) for i in range(len(COLUMNS)))
 START_SYMBOL = "$"
 END_SYMBOL = "@"
@@ -131,9 +135,9 @@ def prune(keywords, data):
                 break
     return sentences
 
-def get_features(self,file):
+def get_features(file):
 
-    data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
+    data = pd.read_csv(file, names=COLUMNS, sep=',',skiprows=[0])
 
     # create input x
     x = []
@@ -141,7 +145,7 @@ def get_features(self,file):
         if row['clean_data'] == 1:
             inp = []
             # modify columns_stats to use
-            for name in columns_test:
+            for name in COLUMNS_TEST:
                 if name == 'team_1_leader_passing_yds':
                     num_buckets = 11
                     yd_buckets = [0] * (num_buckets)
