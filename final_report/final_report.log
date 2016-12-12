@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 DEC 2016 19:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 DEC 2016 22:09
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -25,18 +25,13 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 -- Using 8.5in x 11in (letter) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen105
--- This is a 10 point document.
+-- This is a 12 point document.
 \CLASSINFOnormalsizebaselineskip=\dimen106
 \CLASSINFOnormalsizeunitybaselineskip=\dimen107
 \IEEEnormaljot=\dimen108
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
@@ -54,24 +49,24 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <22> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
@@ -287,6 +282,11 @@ runsystem(rm "final_report.aex")...executed.
 
 
 (./_minted-final_report/default.pygstyle)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 332.
+Package: cite 2015/02/27  v 5.5
+)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip47
@@ -370,7 +370,7 @@ LaTeX Font Info:    ... okay on input line 382.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 382.
 LaTeX Font Info:    ... okay on input line 382.
 
--- Lines per column: 58 (exact).
+-- Lines per column: 50 (exact).
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count131
@@ -425,77 +425,108 @@ LaTeX Font Info:    Try loading font information for OMS+ptm on input line 450.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <11> not available
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <14> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 450.
 
-<pcfg.png, id=1, 452.69125pt x 225.84375pt>
-File: pcfg.png Graphic file (type png)
- <use pcfg.png>
-Package pdftex.def Info: pcfg.png used on input line 516.
-(pdftex.def)             Requested size: 180.67499pt x 90.13602pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 624--626
-
- []
-
-
-Underfull \hbox (badness 1377) in paragraph at lines 627--629
-[]\OT1/ptm/m/n/9 [2] Hart-man, Charles (1996). \OT1/ptm/m/it/9 Vir-tual Muse: E
-x-per-i-ments in
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 627--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 630--632
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 633--635
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 636--638
-
- []
-
-
-Underfull \hbox (badness 2096) in paragraph at lines 639--641
-[]\OT1/ptm/m/n/9 [6] Jef-frey Nichols, Jalal Mah-mud, Clemens Drews. 2012.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 639--641
-
+Underfull \hbox (badness 4096) in paragraph at lines 487--488
+\OT1/ptm/m/n/12 learn-ing and nat-u-ral lan-guage pro-cess-ing ap-
  []
 
 [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-[2 <./pcfg.png>] (./final_report.aux) ) 
+Underfull \hbox (badness 1400) in paragraph at lines 518--519
+\OT1/ptm/m/n/12 di-rectly from ESPN's pub-licly ac-ces-si-ble web-
+ []
+
+<pcfg.png, id=10, 452.69125pt x 225.84375pt>
+File: pcfg.png Graphic file (type png)
+ <use pcfg.png>
+Package pdftex.def Info: pcfg.png used on input line 524.
+(pdftex.def)             Requested size: 180.67499pt x 90.13602pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--634
+
+ []
+
+
+Underfull \hbox (badness 4967) in paragraph at lines 635--637
+[]\OT1/ptm/m/n/9 Hartman, Charles (1996). \OT1/ptm/m/it/9 Vir-tual Muse: Ex-per
+-i-ments in
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 635--637
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 638--640
+\OT1/ptm/m/n/9 lan-guage gen-er-a-tion for spo-ken di-a-logue sys-tems". In
+ []
+
+
+Underfull \hbox (badness 7397) in paragraph at lines 638--640
+\OT1/ptm/m/n/9 Pro-ceed-ings of the 2000 ANLP/NAACL Work-shop on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 638--640
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 641--643
+[]\OT1/ptm/m/n/9 Adwait Rat-na-parkhi. 2002. ``Train-able ap-proaches to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 641--643
+
+ []
+
+
+Underfull \hbox (badness 1721) in paragraph at lines 644--646
+\OT1/ptm/m/n/9 with con-vo-lu-tional sen-tence rerank-ing". In Pro-ceed-ings of
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 644--646
+
+ []
+
+
+Underfull \hbox (badness 6893) in paragraph at lines 647--649
+[]\OT1/ptm/m/n/9 Jeffrey Nichols, Jalal Mah-mud, Clemens Drews. 2012.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 647--649
+
+ []
+
+[2] [3
+
+ <./pcfg.png>] (./final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 5736 strings out of 493089
- 93411 string characters out of 6134842
- 200686 words of memory out of 5000000
- 9142 multiletter control sequences out of 15000+600000
- 34569 words of font info for 65 fonts, out of 8000000 for 9000
+ 5826 strings out of 493089
+ 94516 string characters out of 6134842
+ 203509 words of memory out of 5000000
+ 9228 multiletter control sequences out of 15000+600000
+ 33569 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,6n,35p,841b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/font
-s/enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on final_report.pdf (2 pages, 67234 bytes).
+ 37i,6n,35p,1096b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/
+enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/
+utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on final_report.pdf (3 pages, 82532 bytes).
 PDF statistics:
- 27 PDF objects out of 1000 (max. 8388607)
- 17 compressed objects within 1 object stream
+ 34 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
