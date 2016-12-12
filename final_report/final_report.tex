@@ -476,10 +476,13 @@
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
+\section{Abstract}
 
 
 \section{Introduction}
 With the large number of users and diverse use of applications within the MIT wireless network, maintaining performance becomes critical. When devices attempt to connect to the MIT network, it is common for multiple Access Points to be within range so devices will choose to connect to the strongest signal AP. However, this may not be optimal for performance, since signal strength indicates nothing about traffic congestion. Depending on the application, it could be better to connect to an AP whose signal strength is weaker, but has less congestion and thus higher throughput.
+
+\subsection{Motivation}
 
 In looking to address this issue and optimize performance, MIT facilities seeks for its wireless internet users to be able to connect to Access Points (APs) with acceptable performance, either by connecting to an AP within range or by connecting to a nearby recommended AP, all while still maintaining maximum network utilization across the whole MIT network. In addition, for the purposes of network management, MIT facilities needs to collect data on each AP's amount of data transfer as well as its approximate number of unique users. To accomplish this, we propose Latch, a simple, reliable, and scalable system for optimizing network performance for users and optimizing network utilization.
 
@@ -499,15 +502,34 @@ In looking to address this issue and optimize performance, MIT facilities seeks 
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
-\section{System Design}
-Latch's basic design consists of three modules: Access Points, client users, and an MIT Information System \& Technology (IS\&T) server, as shown in Figure \ref{comm_diagram}.  Access Points are connected to the server, through which all congestion data is transmitted. The server stores this data as well as the locations for APs in order to relay to each AP congestion information about their neighboring APs. Clients connect to APs and send their application requirements as well as a list of nearby APs with acceptable performance. Using this information and the congestion information from the server, the AP uses an optimization algorithm to determine whether the the client should connect and if not, it recommends another nearby acceptable AP to connect to, sending this information to the client as a connection message.
+\section{Related Work}
+Generation of somewhat short sentences using Markov chains and stochastic methods have
+been shown to be quite simple and effective in generating poetry [1, 2], so we focused on applying these same principles in synthesizing valid headlines. This method yields a good way for text generation learned from examples; however, there is relatively much less research in the topic of generation solely from a combination of statistics and their corresponding text examples. Other, more syntactically-based models geared toward dialogue systems [3, 4], were shown to be inapplicable due to the lack of grammatical structure of the headlines in our data. Wen et. al. [5] presented an empirically-tested LSTM model capable of generating linguistically varied responses, but applying a deep, recurrent model to our problem proved hard due to the lack of data and difficulty of integration of the statistics in training.
+
+
+Football game summaries have been explored by Nichols et. al. [6] and Chakrabarti \& Punera [7], but both methods relied on learning data directly from Twitter and were uninformed by the statistics of games, as our model was. 
+
+\section{Data Collection}
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=2.5in]{john.png}
-\caption{Communications Diagram}
-\label{comm_diagram}
+\includegraphics[width=2.5in]{pcfg.png}
+\caption{PCFG example}
+\label{pcfg}
 \end{figure*}
+
+\section{Approach}
+\ref{pcfg}.
+
+\section{Results}
+
+\section{Contribution}
+
+\subsection{Parker Greene}
+
+\subsection{Itamar Belson}
+
+\subsection{John Clarke}
 
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
@@ -567,185 +589,6 @@ Latch's basic design consists of three modules: Access Points, client users, and
 % Note that, LaTeX2e, unlike IEEE journals, places footnotes above bottom
 % floats. This can be corrected via the \fnbelowfloat command of the
 % stfloats package.
-\subsection{Server}
-The data stored in the IS\&T server will primarily be organized in two SQL tables:
-\verb|Congestions| and \verb|Local_AP|.
-
-The \verb|Congestions| table maps the MAC address of every AP in the network to its measure of congestion.
-It is defined in Listing \ref{code1}.
- 
-\begin{listing}[H]
-\begin{minted}[breaklines]{sql}
-CREATE TABLE Congestion (
-  address VARCHAR(12),
-  bytes_utilized BIGINT,
-  capacity BIGINT,
-  congestion BIGINT);
-\end{minted}
-\caption{Congestion Table}
-\label{code1}
-\end{listing}
- 
-The \verb|bytes_utilized| field gives a straightforward measurement of remaining AP capacity, while the congestion column is reserved for a separate measure possibly based on dropped packets or user happiness levels. The \verb|Local_AP| table stores each AP in the network with a list of neighboring APs within 625' of it. It is defined in Listing \ref{code2}.
- 
-\begin{listing}[H]
-\begin{minted}[breaklines]{sql}
-CREATE TABLE Local_AP (
-  address VARCHAR(12),
-  local_APs VARCHAR(12) MULTISET);
-\end{minted}
-\caption{Local\_AP Table}
-\label{code2}
-\end{listing} 
-
-When the server receives packets from a certain AP, it updates the \verb|Congestions| table appropriately. Then, the server will read all of the congestion data that needs to be sent to this AP from the table. The process happens sequentially—the server receives data from AP a, then responds to a with the congestion data it needs.
- 
-For example, say an AP with MAC address \verb|01-23-45-67-89-ab| sends its congestion data as two variables b,c=(\# of bytes utilized, congestion) to the IS\&T server. The IS\&T server will run the following query in Listing \ref{code3} to update the congestion table.
- 
-\begin{listing}[H]
-\begin{minted}[breaklines]{sql}
-UPDATE Congestions
-  SET bytes_utilized=b,congestion=c
-  WHERE address='01-23-45-67-89-ab';
-\end{minted}
-\caption{Congestion Updates}
-\label{code3}
-\end{listing}
-Then it will retrieve a list of the APs nearby as in Listing \ref{code4}.
- 
-\begin{listing}[H]
-\begin{minted}[breaklines]{sql}
-SELECT local_aps
-  FROM Local_AP
-  WHERE address='01-23-45-67-89-ab';
-\end{minted}
-\caption{Local AP Query}
-\label{code4}
-\end{listing}
- 
-After it has this list of MAC addresses, it will run a query into \verb|Congestions| to gather a list of each AP and its corresponding congestion data. The procedure is defined in pseudo-code in Listing \ref{code5}.
- 
-\begin{listing}[H]
-\begin{minted}[breaklines]{sql}
-For MAC_address in local_aps:
-  data <- SELECT congestion
-          FROM Congestions
-          WHERE address=MAC_address
-send data to 01-23-45-67-89-ab
-\end{minted}
-\caption{Congestion Response to AP}
-\label{code5}
-\end{listing}
- 
-It will forward this result to the AP that initially sent its data to the server.
- 
-Because the congestion data is sent to the server every 2 minutes, the response data about local APs that the IS\&T server sends back to the AP will never be more than 2 minutes out of date. Additionally, because the \verb|Local_AP| table will be dealing with many reads in a single second, the reads can be distributed among the server's many cores, so that the process of retrieving the data can be done concurrently and responses will be nearly instantaneous. The update to the \verb|Congestion| table, however, limits the ability for reads to happen concurrently. Therefore, we let the update happen only once every 30 seconds on a single, separate thread with a copy of the outdated table. Once the update is complete, it will replace the outdated table with the new updated \verb|Congestion| table. The server needs to store a buffer that contains all of the congestion data it received since the last update of this table so that it can do these updates with batches of the congestion data.
- 
-The number of APs in the system at any given time is less than 4000, which means the server will be doing at most 33 reads/second from the \verb|Congestion| and \verb|Local_AP| tables, and every 30 seconds the server will need to update the approximately 500 entries in the \verb|Congestion| table. We want to ensure that the APs are not all sending their data to the server at the same time so as to ensure the maximum number of packets received by the server at any given 30 second interval is unlikely to be too much higher than 500.
-\subsection{Initial Connection Processes}
-The client to AP connection process begins with a series of steps to find the optimal AP to which a client should be linked.
- 
-\subsubsection{Client Phase}
-When a client attempts to initially connect to an access point, it needs to intelligently determine which APs it should try first. The following sequence creates an ordered list for the client to use to find the optimal AP.
- 
-For each channel from 1 to 11, the client will switch to that channel and wait for a heartbeat. As this happens, the client stores a list of tuples for the APs that it finds in the form [(AP MAC Address, AP to Client signal strength)]. This search process takes at most 385ms, allowing 5ms to switch channels and 30ms to wait for a heartbeat. The client then filters the list by filter strength, keeping only the APs whose strength it deems acceptable (this measure of acceptability is determined by the client itself, e.g. all signals above 60\%). Next, it sorts the list in descending order by strength. These operations will take a small amount time, as the client is only searching on 11 channels, so there can only be at most 11 APs.
- 
-Once the client has this list, it will connect to the “best,” or strongest AP. If this AP is too congested, it will make space for the new client using the Kickoff Algorithm described in the next section. The AP will tell the clients who got kicked off which APs they should connect to next.
- 
-\subsubsection{AP Phase}
-When a new client connects to an AP, the AP needs to know if it has room to support the new client. By storing certain relevant information and running a clever congestion analysis algorithm, the AP will know if it has room, and how to make room if it does not.
- 
-Each AP stores a table mapping its geographically neighboring APs to their levels of congestion. It also holds a list of its currently connected clients and the APs to which they have reasonable signal strength.
- 
-Every two minutes, the AP contacts the IS\&T server. The AP tells the server its own congestion level, and the server sends back an updated table of the nearby AP congestion levels. A metric for determining the level of congestion is described in a later section.
- 
-The AP sorts its list of connected clients in order of whom it should kick off first, using the Kickoff Algorithm described in the next section. If the AP's congestion level is too high, it kicks clients off the AP, starting at the top of the list, until it is no longer congested. When it kicks a client off, it tells them which of their acceptable APs is the best one for them to connect to. If the congestion level is acceptable and there is room for the new client, the AP simply allows the connection to continue and includes the new client in its next congestion analysis.
-
-\subsection{Kick-off Algorithm}
-Because our APs allow any client to connect, we can end up in a situation where
-too many clients have connected. To prevent congestion, we must prune the
-client list regularly.
-
-In order to do the pruning, we maintain a list of connected clients, sorted in
-the order we would like to kick them off. When a new client connects, we just
-insert them into the list at the correct position. When our AP congestion map
-changes, we have to re-sort the entire list (but this happens
-infrequently).
-
-Then we regularly measure our own congestion, and if it is above
-acceptable levels we kick clients from the top of the list until we have some
-breathing room.
-
-So the question is how to rank the clients. We choose to rank them in terms of
-how good their next best alternative AP is. To do this, we need to know what
-APs each client can connect to, how much data the client needs, and how
-congested those APs are.
-
-This scheme also has the advantage of calculating the best alternative for
-every client--so when we kick that client, we tell them which AP to try to
-reconnect to.
-    
-When a client connects, we get a list from them that tells us which APs they
-are happy to connect to. We assume this list never changes until they
-disconnect--we never update it. If the client does not move around much, the
-signal strengths they have to various APs should not change much, and none of
-the APs should cross from unacceptable to acceptable or vice versa. In the
-worst case, if the client for example walks around, we might kick them and
-redirect them to an AP they can no longer reach. Then they would re-initiate
-their scanning routine, and re-connect to us with a new list of acceptable
-APs--and this would only take a few seconds.
-
-The client has the information about their signal strengths to various APs, and
-the AP knows how congested the nearby APs are. So the score for a client C with
-desired data rate A is the congestion on the least congested AP that C could
-connect to with the ability to support A more data.
-
-That's quite a mouthful, so Python pseudo-code is shown in Listing \ref{score_client}.
-\begin{listing}[H]
-\begin{minted}[breaklines]{python}
-def score_client(c):
-  desired_data_rate = c['data']
-  acceptable_aps = [a for a in c['aps'] if free_space(a) > desired_data_rate]
-  return max(map(congestion, acceptable_aps))
-\end{minted}
-\caption{Client Kick-off-ability}
-\label{score_client}
-\end{listing}
-
-Our APs are memoryless, in the sense that we don't keep track of who has
-connected to us in the past. That's a nice property to avoid using tons of
-memory, but it means that we might end up in a bad infinite loop if we're not
-careful. If we redirect clients to an AP that cannot support them, that AP will
-kick them out as well--and if it kicks them back to us, we will just kick the
-client right back to the same AP. The loop would continue until either one of
-the APs could support the client, or the APs updated their congestion
-measurements and redirected differently. The former might not happen, and the
-latter takes up to two minutes (and might not even fix the problem). If this
-ever occurs, we will have an unhappy client--so measuring our congestion
-conservatively is very important. If other APs think we have space but we
-don't, the consequences are very bad. If they think we don't have space when we
-just barely do, they just won't redirect users to us.
-
-Getting an accurate measure of congestion isn't necessarily easy. In our
-design, we calculate the amount of free bandwidth we would have if each client
-used their full requested data rate, and call that the amount of free space we
-have. We have designed our system to have room for a different measurement of
-congestion--such as the number of unhappy users, or some function of the times
-we drop packets. For our final report, we intend to analyse the properties of
-these various congestion measures and decide on one which makes our algorithm
-most robust.
-
-Another problem with this scheme is that we don't redirect any clients until
-an AP is full.
-We could add some procedure to the AP that would try to prune clients if the
-neighboring APs were significantly less congested, but we think the unhappiness
-from balancing users who are getting adequate service won't be worth it.
-\section{Conclusion}
-
-Latch is a system for optimizing user's network performance while maximizing network utilization. It is designed for simplicity, reliability, as well as scalability. The system also meets the requirements for network management of MIT's network in collecting data on the APs' amount of data transfer and number of users. This is accomplished by leveraging the use of our designed algorithms for constant optimization updates and effective use of data models.
-
-Currently, the algorithms used don't take care of the balancing of clients, until congestion is present. Also, the client's unhappiness is not taken into consideration during the network balancing of clients. Our further work will be geared towards improving the optimization algorithms both to take care of client balancing before any congestion as well as to make usage of clients' happiness in balancing optimization.
-
 
 
 
@@ -775,6 +618,29 @@ Currently, the algorithms used don't take care of the balancing of clients, unti
 %\IEEEtriggercmd{\enlargethispage{-5in}}
 
 % references section
+
+\section{References}
+\small{
+[1]  Kenner, Hugh; O'Rourke, Joseph (November 1984). ``A Travesty Generator for Micros". BYTE. 9 (12): 129-131, 449-469.
+\newline
+
+[2] Hartman, Charles (1996). \textit{Virtual Muse: Experiments in Computer Poetry}. Hanover, NH: Wesleyan University Press.
+\newline
+
+[3] Alice  H. Oh and Alexander  I. Rudnicky. 2000. ``Stochastic language generation for spoken dialogue systems".  In Proceedings of the 2000 ANLP/NAACL Workshop  on Conversational  Systems  -  Volume  3, ANLP/NAACL-ConvSyst `00.
+\newline
+
+[4] Adwait Ratnaparkhi. 2002. ``Trainable approaches to surface natural language generation and their application to conversational dialog systems". Computer Speech and Language.
+\newline
+
+[5] Tsung-Hsien Wen, Milica Gasic, Dongho Kim, Nikola Mrksic,  Pei-Hao  Su,  David  Vandyke,  and  Steve Young.  2015.  ``Stochastic language generation in dialogue using recurrent neural networks with convolutional sentence reranking".  In Proceedings of SIG-dial. Association for Computational Linguistics.
+\newline
+
+[6] Jeffrey Nichols, Jalal Mahmud, Clemens Drews. 2012. ``Summarizing Sporting Events Using Twitter". IBM Research - Almaden
+\newline
+
+[7] Chakrabarti, D., and Punera, K. 2011. ``Event summarization using tweets". Proceedings of the Fifth International AAAI Conference on Weblogs and Social Media.
+}
 
 % biography section
 % 

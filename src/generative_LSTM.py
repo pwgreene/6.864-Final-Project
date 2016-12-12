@@ -15,7 +15,6 @@ data_filenames = ['data/nfl_game_stats_2009_annotated_clean.csv', 'data/nfl_game
                   'data/nfl_game_stats_2015_annotated_clean.csv', 'data/nfl_game_stats_2016_annotated_clean.csv']
 headlines = utils.extract_column(master_file, 'game_headline_annotated')
 features = utils.get_features(master_file)
-print len(headlines), len(features)
 assert len(headlines) == len(features)
 
 def split_by_chars(seq_len, features=None):
@@ -56,14 +55,14 @@ def split_by_chars_with_features(seq_len, features=None):
     for i in range(len(headlines)):
         #pad headline
         headline = start_symbol*seq_len + headlines[i] + end_symbol
-        for j in range(0, len(headline)-seq_len):
+        for j in range(len(headline)-seq_len):
             input = headline[j:j+seq_len]
             output = headline[j+seq_len]
             dataX.append([vocab[char] for char in input]+features[i])
             dataY.append(vocab[output])
 
-    X = np.reshape(dataX, (len(dataX), seq_len+len(features), 1))
-    X = X / float(len(vocab))
+    X = np.reshape(dataX, (len(dataX), seq_len+len(features[0]), 1))
+    X = X / float(len(vocab)+len(features))
     #one-hot encoding
     y = np_utils.to_categorical(dataY)
     return X, dataX, y, vocab
@@ -116,25 +115,33 @@ def train_model(model, X, y, is_words, nepoch=20):
     return model
 
 
-def predict_headline_char(seed, model, checkpoint_file, vocab, temperature=0.25):
+def predict_headline_char(seed, model, checkpoint_file, vocab, temperature=0.2, feature=None):
     vocab_lookup = dict((vocab[char], char) for char in vocab.keys())
     model.load_weights(checkpoint_file)
     model.compile(loss="categorical_crossentropy", optimizer='adam')
     #print "Seed:", seed
     pattern = [vocab[char] for char in seed]
+    if feature is not None:
+        pattern.extend(feature)
     output = ""
     for i in range(100):
         x = np.reshape(pattern, (1, len(pattern), 1))
         x = x / float(len(vocab))
-        prediction = model.predict(x, verbose=0)[0]
-        index = sample_probabilities(prediction, temperature)
-        #index = np.argmax(prediction)
+        if temperature > 0:
+            prediction = model.predict(x, verbose=0)[0]
+            index = sample_probabilities(prediction, temperature)
+        else:
+            prediction = model.predict(x, verbose=0)
+            index = np.argmax(prediction)
         result = vocab_lookup[index]
         if result == utils.END_SYMBOL:
             return output
         output += result
-        pattern.append(index)
-        pattern = pattern[1:]
+        if feature is not None:
+            pattern = pattern[1:len(pattern)-len(feature)] + [index] + feature
+        else:
+            pattern.append(index)
+            pattern = pattern[1:]
     return output
 
 def predict_headline_word(seed, model, checkpoint_file, vocab, temperature=0.2):
@@ -179,8 +186,8 @@ def create_summary_by_words(nepoch, ntrials, seq_len, train=False):
         print predict_headline_word(seed, model, filename, vocab)
         print
 
-def create_summary_by_chars(nepoch, ntrials, seq_len, train=False, add_features=False):
-    if add_features:
+def create_summary_by_chars(nepoch, ntrials, seq_len, train=False, feature=None):
+    if feature is not None:
         X, dataX, y, vocab = split_by_chars_with_features(seq_len, features)
     else:
         X, dataX, y, vocab = split_by_chars(seq_len)
@@ -189,11 +196,12 @@ def create_summary_by_chars(nepoch, ntrials, seq_len, train=False, add_features=
         model = train_model(model, X, y, False, nepoch)
         filename = raw_input("[prompt] enter filename of best model: ")
     else:
-        filename = 'data/checkpoints/char_encoding/weights-improvement-19-0.4840.hdf5'
+        filename = 'data/checkpoints/char_encoding/chars-3.0648.hdf5'
+
     seed = utils.START_SYMBOL*seq_len
     ntrials = 10
     for trial in range(ntrials):
-        print predict_headline_word(seed, model, filename, vocab)
+        print predict_headline_char(seed, model, filename, vocab, feature=feature)
         print
 
 
@@ -207,5 +215,6 @@ if __name__ == "__main__":
     else:
         nepoch = 20
 
-    create_summary_by_chars(nepoch, 10, seq_len=50, train=True, add_features=True)
+    feature = features[0]
+    create_summary_by_chars(nepoch, 10, seq_len=20, train=True, feature=feature)
 
