@@ -520,17 +520,24 @@ In addition to the box score data, each game on the website also has an accompan
 
 
 \section{Approach}
-\subsection{Statistic Feature Vectors}
 
-\subsection{Neural Net} 
-The NN accepts a vector x of statistics and returns a vector containing the probabilities of words existing in the headline associated with those statistics. We explain our choice of statistic representations in section V. First, projects the statistics vector x through two hidden layers of size $2|x|$. The hidden layer outputs are activated by a Rectified Linear function (ReLU). Then, the result is project to a vector space of size $|V|$, where $V$ is the vocabulary including start and end characters, finally activated by a softmax function. Refer to \ref{model_graph} for an illustration of the NN architecture. We initialize the weights by sampling from a Gaussian distribution $N(0,1)$. To train the model, we optimize a categorical cross-entropy loss function using stochastic gradient descent (SGD) with adaptive maximum descent (Adam). This training method suits our objective of producing multi-class predictions. Lastly, we regularize our model on two fronts: (1) with a learning rate parameter and (2) neural dropout, where we ignore the weights connected to neurons that are ``turned off" with probability $p$ during training. With our vector $y$ of word probabilities $p(w_i)$ for $w_i \in V$, we move on to trigram MC.
-
-
-\begin{figure*}[!t]
+\begin{figure*}[t]
 \centering
 \includegraphics[width=7in]{model_graph.png}
 \caption{Box Diagram of the full headline generation system}
 \label{model_graph}
+\end{figure*}
+
+\subsection{Statistic Feature Vectors}
+
+\subsection{Neural Net} 
+The NN accepts a vector x of statistics and returns a vector containing the probabilities of words existing in the headline associated with those statistics. We explain our choice of statistic representations in section V. First, projects the statistics vector x through two hidden layers of size $2|x|$. The hidden layer outputs are activated by a Rectified Linear function (ReLU). Then, the result is project to a vector space of size $|V|$, where $V$ is the vocabulary including start and end characters, finally activated by a softmax function. Refer to \ref{NN} for an illustration of the NN architecture. We initialize the weights by sampling from a Gaussian distribution $N(0,1)$. To train the model, we optimize a categorical cross-entropy loss function using stochastic gradient descent (SGD) with adaptive maximum descent (Adam). This training method suits our objective of producing multi-class predictions. Lastly, we regularize our model on two fronts: (1) with a learning rate parameter and (2) neural dropout, where we ignore the weights connected to neurons that are ``turned off" with probability $p$ during training. With our vector $y$ of word probabilities $p(w_i)$ for $w_i \in V$, we move on to trigram MC.
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=.6\textwidth]{NN.png}
+\caption{Overview of the neural network architecture. Input to the network is the feature vector $s$ and output is the word-likelihood vector $d$.}
+\label{NN}
 \end{figure*}
 
 \subsection{Re-weighted Trigram Markov Generator}
