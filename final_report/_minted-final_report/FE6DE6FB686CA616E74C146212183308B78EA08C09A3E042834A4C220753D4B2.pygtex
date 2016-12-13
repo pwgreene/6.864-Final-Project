@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k}{def} \PYGdefault{n+nf}{reweight\PYGdefaultZus{}markov}\PYGdefault{p}{(}\PYGdefault{n}{d}\PYGdefault{p}{,} \PYGdefault{n}{T}\PYGdefault{p}{):}
+  \PYGdefault{n}{M} \PYGdefault{o}{=} \PYGdefault{n}{copy}\PYGdefault{p}{(}\PYGdefault{n}{T}\PYGdefault{p}{)}
+  \PYGdefault{k}{for} \PYGdefault{n}{u} \PYGdefault{o+ow}{in} \PYGdefault{n+nb}{range}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{n}\PYGdefault{o}{*}\PYGdefault{n}{n}\PYGdefault{p}{):}
+    \PYGdefault{k}{for} \PYGdefault{n}{v} \PYGdefault{o+ow}{in} \PYGdefault{n+nb}{range}\PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{n}\PYGdefault{p}{):}
+      \PYGdefault{n}{M}\PYGdefault{p}{[}\PYGdefault{n}{u}\PYGdefault{p}{][}\PYGdefault{n}{v}\PYGdefault{p}{]} \PYGdefault{o}{=} \PYGdefault{n}{T}\PYGdefault{p}{[}\PYGdefault{n}{u}\PYGdefault{p}{][}\PYGdefault{n}{v}\PYGdefault{p}{]} \PYGdefault{o}{*} \PYGdefault{n}{d}\PYGdefault{p}{[}\PYGdefault{n}{v}\PYGdefault{p}{]}
+ \PYGdefault{k}{return} \PYGdefault{n}{M}
+\end{Verbatim}
