@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 DEC 2016 22:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  12 DEC 2016 21:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -440,93 +440,129 @@ Underfull \hbox (badness 1400) in paragraph at lines 518--519
 \OT1/ptm/m/n/12 di-rectly from ESPN's pub-licly ac-ces-si-ble web-
  []
 
-<pcfg.png, id=10, 452.69125pt x 225.84375pt>
-File: pcfg.png Graphic file (type png)
- <use pcfg.png>
-Package pdftex.def Info: pcfg.png used on input line 524.
-(pdftex.def)             Requested size: 180.67499pt x 90.13602pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 527.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 527.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 527.
+<model_graph.png, id=10, 1003.75pt x 401.5pt>
+File: model_graph.png Graphic file (type png)
+ <use model_graph.png>
+Package pdftex.def Info: model_graph.png used on input line 532.
+(pdftex.def)             Requested size: 505.89pt x 202.36073pt.
+ [2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Underfull \hbox (badness 10000) in paragraph at lines 632--634
+\openout3 = `final_report.pyg'.
+
+
+(./_minted-final_report/FE6DE6FB686CA616E74C146212183308B78EA08C09A3E042834A4C2
+20753D4B2.pygtex
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 2.
+)
+
+LaTeX Warning: Reference `pcfg' on page 3 undefined on input line 558.
+
+[3 <./model_graph.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 662--664
 
  []
 
 
-Underfull \hbox (badness 4967) in paragraph at lines 635--637
+Underfull \hbox (badness 4967) in paragraph at lines 665--667
 []\OT1/ptm/m/n/9 Hartman, Charles (1996). \OT1/ptm/m/it/9 Vir-tual Muse: Ex-per
 -i-ments in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 635--637
+Underfull \hbox (badness 10000) in paragraph at lines 665--667
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 638--640
+Underfull \hbox (badness 10000) in paragraph at lines 668--670
 \OT1/ptm/m/n/9 lan-guage gen-er-a-tion for spo-ken di-a-logue sys-tems". In
  []
 
 
-Underfull \hbox (badness 7397) in paragraph at lines 638--640
+Underfull \hbox (badness 7397) in paragraph at lines 668--670
 \OT1/ptm/m/n/9 Pro-ceed-ings of the 2000 ANLP/NAACL Work-shop on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 638--640
+Underfull \hbox (badness 10000) in paragraph at lines 668--670
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 641--643
+Underfull \hbox (badness 10000) in paragraph at lines 671--673
 []\OT1/ptm/m/n/9 Adwait Rat-na-parkhi. 2002. ``Train-able ap-proaches to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 641--643
+Underfull \hbox (badness 10000) in paragraph at lines 671--673
 
  []
 
 
-Underfull \hbox (badness 1721) in paragraph at lines 644--646
+Underfull \hbox (badness 1721) in paragraph at lines 674--676
 \OT1/ptm/m/n/9 with con-vo-lu-tional sen-tence rerank-ing". In Pro-ceed-ings of
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--646
+Underfull \hbox (badness 10000) in paragraph at lines 674--676
 
  []
 
 
-Underfull \hbox (badness 6893) in paragraph at lines 647--649
+Underfull \hbox (badness 6893) in paragraph at lines 677--679
 []\OT1/ptm/m/n/9 Jeffrey Nichols, Jalal Mah-mud, Clemens Drews. 2012.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 647--649
+Underfull \hbox (badness 10000) in paragraph at lines 677--679
 
  []
 
-[2] [3
+runsystem(rm "final_report.pyg")...executed.
 
- <./pcfg.png>] (./final_report.aux) ) 
+[4
+
+] (./final_report.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 5826 strings out of 493089
- 94516 string characters out of 6134842
- 203509 words of memory out of 5000000
- 9228 multiletter control sequences out of 15000+600000
- 33569 words of font info for 62 fonts, out of 8000000 for 9000
+ 5869 strings out of 493089
+ 95389 string characters out of 6134842
+ 205590 words of memory out of 5000000
+ 9255 multiletter control sequences out of 15000+600000
+ 38442 words of font info for 76 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,6n,35p,1096b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/
-enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/
-utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (3 pages, 82532 bytes).
+ 37i,6n,36p,1547b,419s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
+ts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.p
+fb>
+Output written on final_report.pdf (4 pages, 160251 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 22 compressed objects within 1 object stream
+ 77 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
