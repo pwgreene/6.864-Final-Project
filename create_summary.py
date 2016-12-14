@@ -17,21 +17,18 @@ def bigram_summary():
 
     #print generator.words
     for i in range(len(word_to_prob)):
-        test_sentence = e.raw_test[i]
-        test_sentence_words = map(lambda x: utils.clean_word(x), test_sentence.split(' '))
-        print test_sentence_words
-        # w = sorted(word_to_prob[i].items(), key=lambda x: x[1])[-10:]
-        # print w
-        # generator_bi.apply_word_probabilites(word_to_prob[i])
-        # generator_tri.apply_word_probabilites(word_to_prob[i])
-        # for _ in range(30):
-        #     sentence1 = generator_bi.generate_sentence()
-        #     sentence2 = generator_tri.generate_sentence()
-        #     print sentence1
-        #     print sentence2
-        #     print utils.substitute_values_in_headline(e.raw_test[i], sentence1)
-        #     print utils.substitute_values_in_headline(e.raw_test[i], sentence2)
-        #     print 
+        w = sorted(word_to_prob[i].items(), key=lambda x: x[1])[-10:]
+        print w
+        generator_bi.apply_word_probabilites(word_to_prob[i])
+        generator_tri.apply_word_probabilites(word_to_prob[i])
+        for _ in range(30):
+            sentence1 = generator_bi.generate_sentence()
+            sentence2 = generator_tri.generate_sentence()
+            print sentence1
+            print sentence2
+            print utils.substitute_values_in_headline(e.raw_test[i], sentence1)
+            print utils.substitute_values_in_headline(e.raw_test[i], sentence2)
+            print 
 
     # print proba_norm[i]
     # generator.apply_word_probabilites(word_to_prob)

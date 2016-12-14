@@ -34,7 +34,7 @@ class Embedding(object):
         columns_stats = STATS_COLUMNS
 
         # for experimenting with different feature combination
-        columns_test = ['team_1_leader_passing_td','team_1_leader_passing_yds','team_1_leader_rushing','team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving','team_1_leader_receiving_yds','team_1_leader_receiving_td','game_leader_kicker_points','game_leader_scorer_points','team_1_leader_passing_int', \
+        columns_test = ['team_1_leader_passing_td','team_1_leader_passing_yds','team_1_leader_rushing_yds','team_1_leader_rushing_td','team_1_leader_receiving_td','team_1_leader_receiving_yds','game_leader_kicker_points','game_leader_scorer_points','team_1_leader_passing_int', \
         'team_2_leader_passing_int','team_score_diff']
 
         data = pd.read_csv(file, names=columns, sep=',',skiprows=[0])
@@ -111,17 +111,19 @@ class Embedding(object):
                 x.append(inp)
 
         self.headlines_annotated = headlines_annotated
-
+        
         return (x,y)
 
-    def train(self, loss, learning_rate = 0.05, epochs=200, batch_size=256):
+    def train(self, loss, learning_rate = 0.05, epochs=100, batch_size=256):
         input_size = len(self.xtrain[0])
         model = Sequential()
         model.add(Dense(2*input_size,input_dim=input_size, init='normal'))
         model.add(Activation('relu'))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.10))
         model.add(Dense(2*input_size, init='normal', activation='relu'))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.10))
+        model.add(Dense(2*input_size, init='normal', activation='relu'))
+        model.add(Dropout(0.10))
         model.add(Dense(self.vocab_size))
         model.add(Activation('softmax'))
         model.compile(loss=loss, optimizer='adam')

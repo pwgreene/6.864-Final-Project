@@ -1,0 +1,6 @@
+def reweight_markov(d, T):
+  M = copy(T)
+  for u in range(0, n*n):
+    for v in range(0, n):
+      M[u][v] = T[u][v] * d[v]
+ return M
