@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Motivation}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Related Work}{}% 3
+\BOOKMARK [1][-]{section.3}{Data Collection}{}% 4
+\BOOKMARK [1][-]{section.4}{Approach}{}% 5
+\BOOKMARK [2][-]{subsection.4.1}{Statistic Feature Vectors}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.2}{Neural Net}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.3}{Re-weighted Trigram Markov Generator}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{Results}{}% 9
+\BOOKMARK [1][-]{section.6}{Contribution}{}% 10
+\BOOKMARK [2][-]{subsection.6.1}{Parker Greene}{section.6}% 11
+\BOOKMARK [2][-]{subsection.6.2}{Itamar Belson}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.3}{John Clarke}{section.6}% 13
+\BOOKMARK [1][-]{section.7}{Source Code}{}% 14
+\BOOKMARK [1][-]{section*.1}{References}{}% 15
