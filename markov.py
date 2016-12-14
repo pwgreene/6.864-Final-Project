@@ -1,12 +1,12 @@
 import random
 import numpy as np
-from utils import clean_word, START_SYMBOL, END_SYMBOL, keywords
+from utils import clean_word, START_WORD, END_WORD, keywords
 
 class MarkovChain:
 
     def __init__(self, data=None):
-        self.start_state = START_SYMBOL
-        self.end_state = END_SYMBOL
+        self.start_state = START_WORD
+        self.end_state = END_WORD
         self.words = {self.start_state:0, self.end_state:1}
         self.transitions = np.zeros((2,2)) #self.transtions[a][b] is the prob of transitioning from a to b (nested dictionary)
         self.add_transtion_count(self.end_state, self.end_state) #so probabilities sum to 1
@@ -19,7 +19,6 @@ class MarkovChain:
         :param data: list of strings
         :return: None
         """
-
         for phrase in data:
             phrase_words = phrase.split()
             for i in range(len(phrase_words)):
@@ -62,13 +61,12 @@ class MarkovChain:
         :param word_to_prob: dict mapping each word in the vocab to its probability
         :return: None. Mutates self.transitions (a numpy array)
         """
-        alpha = 10e-6
+        alpha = 10e-4
         prob_vector = np.zeros(len(self.words))
         for word in word_to_prob.keys():
             assert word in self.words #theres a problem if the input probabilites has a word never seen before
             prob_vector[self.words[word]] = word_to_prob[word] + alpha
         prob_vector[self.words[self.start_state]] = 1.0
-        prob_vector[self.words[self.end_state]] = 1.0
         for i in range(len(self.transitions)):
             #print 'before', self.transitions[i]
             self.transitions[i] = self.transitions[i] * prob_vector
@@ -92,7 +90,7 @@ class MarkovChain:
 class MarkovChainTrigram(MarkovChain):
 
     def __init__(self, headlines):
-        self.word_pairs = {START_SYMBOL:0, END_SYMBOL:1}
+        self.word_pairs = {START_WORD:0, END_WORD:1}
         MarkovChain.__init__(self, headlines)
 
     def estimate_transition_probs(self, data):
@@ -112,7 +110,7 @@ class MarkovChainTrigram(MarkovChain):
                 if (prev_word, curr_word) not in self.word_pairs:
                     self.word_pairs[(prev_word, curr_word)] = len(self.word_pairs)
 
-                elif i < len(phrase_words):
+                elif i < len(phrase_words)-1:
                     next_word = clean_word(phrase_words[i+1])
                     if next_word not in self.words:
                         self.words[next_word] = len(self.words)
@@ -163,16 +161,14 @@ class MarkovChainTrigram(MarkovChain):
         """
         self.transitions[self.word_pairs[from_word]][self.words[to_word]] += 1
 
-# if __name__ == "__main__":
-#     #tests
-#     #test sentence generation
-#     data = ["Sally sells seashells by the seashore.", "Sally did not like the other man.", "The president met with the man."]
-#     markov = MarkovChain(data)
-#     # print markov.generate_sentence()
-#     word_prob = {}
-#     #test applying a probability vector
-#     for word in markov.words.keys():
-#         word_prob[word] = 1./len(markov.words)
-#     markov.apply_word_probabilites(word_prob)
-#     print markov.transitions
-
+if __name__ == "__main__":
+    #tests
+    #test sentence generation
+    data = ["Sally sells seashells by the seashore.", "Sally did not like the other man.", "The president met with the man."]
+    markov = MarkovChain(data)
+    # print markov.generate_sentence()
+    word_prob = {}
+    #test applying a probability vector
+    for word in markov.words.keys():
+        word_prob[word] = 1./len(markov.words)
+    markov.apply_word_probabilites(word_prob)

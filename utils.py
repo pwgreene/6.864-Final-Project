@@ -81,7 +81,7 @@ def clean_word(word):
     :return: lowercase str without trailing punctuation
     """
 
-    if word[-1] in ",.-_'":
+    if word[-1] in ".-_,'":
         word = word[:-1]
     word = word.lower()
     return word
@@ -101,7 +101,10 @@ def substitute_values_in_headline(values, headline):
         match = re.match(pattern, word)
         if match:
             column = match.group(1)
-            new_headline.append(values[COLUMN_TO_INDEX[column]])
+            if column == "game_score":
+                new_headline.append("%s-%s" % (values["team_1_score"], values["team_2_score"]))
+            else:
+                new_headline.append(str(values[column]))
         else:
             new_headline.append(word)
     return " ".join(new_headline)

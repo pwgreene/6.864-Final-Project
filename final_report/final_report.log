@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 DEC 2016 19:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 DEC 2016 23:06
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -454,23 +454,27 @@ Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
 \ALC@tlm=\skip51
 \algorithmicindent=\skip52
 )
-(./final_report.aux)
+(./final_report.aux
+
+LaTeX Warning: Label `table_example' multiply defined.
+
+)
 \openout1 = `final_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 383.
-LaTeX Font Info:    ... okay on input line 383.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 382.
+LaTeX Font Info:    ... okay on input line 382.
 
 -- Lines per column: 50 (exact).
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -519,7 +523,7 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
 \AtBeginShipoutBox=\box38
-Package hyperref Info: Link coloring OFF on input line 383.
+Package hyperref Info: Link coloring OFF on input line 382.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -529,24 +533,24 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count147
 )
-LaTeX Info: Redefining \ref on input line 383.
-LaTeX Info: Redefining \pageref on input line 383.
-LaTeX Info: Redefining \nameref on input line 383.
+LaTeX Info: Redefining \ref on input line 382.
+LaTeX Info: Redefining \pageref on input line 382.
+LaTeX Info: Redefining \nameref on input line 382.
 
 (./final_report.out) (./final_report.out)
 \@outlinefile=\write6
 \openout6 = `final_report.out'.
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 452.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 451.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <14> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 452.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 451.
 
-Underfull \hbox (badness 4096) in paragraph at lines 488--489
+Underfull \hbox (badness 4096) in paragraph at lines 487--488
 \OT1/ptm/m/n/12 learn-ing and nat-u-ral lan-guage pro-cess-ing ap-
  []
 
@@ -554,42 +558,68 @@ Underfull \hbox (badness 4096) in paragraph at lines 488--489
 
 
 ]
-Underfull \hbox (badness 1400) in paragraph at lines 519--520
+Underfull \hbox (badness 1400) in paragraph at lines 517--518
 \OT1/ptm/m/n/12 di-rectly from ESPN's pub-licly ac-ces-si-ble web-
  []
 
-<model_graph.png, id=80, 1003.75pt x 401.5pt>
-File: model_graph.png Graphic file (type png)
- <use model_graph.png>
-Package pdftex.def Info: model_graph.png used on input line 528.
-(pdftex.def)             Requested size: 505.89pt x 202.36073pt.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 536.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 536.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 536.
+\openout3 = `final_report.pyg'.
 
-<NN.png, id=83, 1091.07625pt x 679.53876pt>
+runsystem(pygmentize -l python -f latex -F tokenmerge -P style=default -P comma
+ndprefix=PYGdefault -o "_minted-final_report/3A780FB95817A7B5BF8C25BE60093C8FB7
+8EA08C09A3E042834A4C220753D4B2.pygtex" "final_report.pyg" )...executed.
+
+
+(./_minted-final_report/3A780FB95817A7B5BF8C25BE60093C8FB78EA08C09A3E042834A4C2
+20753D4B2.pygtex)
+Package hyperref Info: bookmark level for unknown listing defaults to 0 on inpu
+t line 528.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 535.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 535.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 535.
+ <model_graph.png, id=82, 1003.75pt x 401.5pt>
+File: model_graph.png Graphic file (type png)
+
+<use model_graph.png>
+Package pdftex.def Info: model_graph.png used on input line 539.
+(pdftex.def)             Requested size: 505.89pt x 202.36073pt.
+ [2]
+Underfull \hbox (badness 7504) in paragraph at lines 551--552
+[]\OT1/ptm/m/n/12 team[]1[]leader[]passing[]yds $\OT1/cmr/m/n/12 [0 \OMS/cmsy/m
+/n/12 ^^@ \OT1/cmr/m/n/12 50\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 50 \OMS/cmsy/m/n
+/12 ^^@
+ []
+
+
+Underfull \hbox (badness 7504) in paragraph at lines 552--553
+[]\OT1/ptm/m/n/12 team[]1[]leader[]rushing[]yds $\OT1/cmr/m/n/12 [0 \OMS/cmsy/m
+/n/12 ^^@ \OT1/cmr/m/n/12 25\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 25 \OMS/cmsy/m/n
+/12 ^^@
+ []
+
+
+Underfull \hbox (badness 2142) in paragraph at lines 553--554
+[]\OT1/ptm/m/n/12 team[]1[]leader[]receiving[]yds $\OT1/cmr/m/n/12 [0 \OMS/cmsy
+/m/n/12 ^^@ \OT1/cmr/m/n/12 25\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 25 \OMS/cmsy/m
+/n/12 ^^@
+ []
+
+<NN.png, id=100, 1091.07625pt x 679.53876pt>
 File: NN.png Graphic file (type png)
  <use NN.png>
-Package pdftex.def Info: NN.png used on input line 540.
+Package pdftex.def Info: NN.png used on input line 567.
 (pdftex.def)             Requested size: 309.60315pt x 192.82031pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 541.
+(Font)              <9> on input line 568.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 541.
+(Font)              <5> on input line 568.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[2]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 7722) has occurred while \output is active []
-
- [3 <./model_graph.png> <./NN.png>]
+[3 <./model_graph.png>]
 \openout3 = `final_report.pyg'.
 
 
@@ -598,117 +628,122 @@ Underfull \vbox (badness 7722) has occurred while \output is active []
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <10> not available
 (Font)              Font shape `OT1/pcr/b/n' tried instead on input line 2.
 )
-Package hyperref Info: bookmark level for unknown listing defaults to 0 on inpu
-t line 559.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-LaTeX Warning: Reference `pcfg' on page 4 undefined on input line 566.
+Overfull \hbox (16.34198pt too wide) in paragraph at lines 600--615
+ [][] 
+ []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 674--676
+[4 <./NN.png>] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 749--751
 
  []
 
 
-Underfull \hbox (badness 4967) in paragraph at lines 677--679
+Underfull \hbox (badness 4967) in paragraph at lines 752--754
 []\OT1/ptm/m/n/9 Hartman, Charles (1996). \OT1/ptm/m/it/9 Vir-tual Muse: Ex-per
 -i-ments in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 677--679
+Underfull \hbox (badness 10000) in paragraph at lines 752--754
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 680--682
+Underfull \hbox (badness 10000) in paragraph at lines 755--757
 \OT1/ptm/m/n/9 lan-guage gen-er-a-tion for spo-ken di-a-logue sys-tems". In
  []
 
 
-Underfull \hbox (badness 7397) in paragraph at lines 680--682
+Underfull \hbox (badness 7397) in paragraph at lines 755--757
 \OT1/ptm/m/n/9 Pro-ceed-ings of the 2000 ANLP/NAACL Work-shop on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 680--682
+Underfull \hbox (badness 10000) in paragraph at lines 755--757
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 683--685
+Underfull \hbox (badness 10000) in paragraph at lines 758--760
 []\OT1/ptm/m/n/9 Adwait Rat-na-parkhi. 2002. ``Train-able ap-proaches to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 683--685
+Underfull \hbox (badness 10000) in paragraph at lines 758--760
 
  []
 
 
-Underfull \hbox (badness 1721) in paragraph at lines 686--688
+Underfull \hbox (badness 1721) in paragraph at lines 761--763
 \OT1/ptm/m/n/9 with con-vo-lu-tional sen-tence rerank-ing". In Pro-ceed-ings of
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 686--688
+Underfull \hbox (badness 10000) in paragraph at lines 761--763
 
  []
 
 
-Underfull \hbox (badness 6893) in paragraph at lines 689--691
+Underfull \hbox (badness 6893) in paragraph at lines 764--766
 []\OT1/ptm/m/n/9 Jeffrey Nichols, Jalal Mah-mud, Clemens Drews. 2012.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 689--691
+Underfull \hbox (badness 10000) in paragraph at lines 764--766
 
  []
 
+runsystem(rm "_minted-final_report/71F52C5651CA16AD3F38A860E62D43B6B78EA08C09A3
+E042834A4C220753D4B2.pygtex")...executed.
+
 runsystem(rm "final_report.pyg")...executed.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 723.
-[4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 723.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 798.
+[6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 798.
  (./final_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 723.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 723.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 798.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 798.
 Package rerunfilecheck Info: File `final_report.out' has not changed.
 (rerunfilecheck)             Checksum: 6F4EF259CDF7E32F641BFCF8789D19EE;835.
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 9439 strings out of 493089
- 150064 string characters out of 6134842
- 284895 words of memory out of 5000000
- 12754 multiletter control sequences out of 15000+600000
- 39354 words of font info for 79 fonts, out of 8000000 for 9000
+ 9455 strings out of 493089
+ 150577 string characters out of 6134842
+ 288238 words of memory out of 5000000
+ 12760 multiletter control sequences out of 15000+600000
+ 41078 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,6n,36p,1548b,427s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,8n,36p,1594b,422s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/te
-xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texliv
-e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2015/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2015/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/texmf-di
-st/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
-/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/u
-rw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/u
-tmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
->
-Output written on final_report.pdf (4 pages, 311193 bytes).
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2015/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/texmf-dis
+t/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/
+type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+
+Output written on final_report.pdf (6 pages, 332836 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 152 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
+ 198 PDF objects out of 1000 (max. 8388607)
+ 168 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
  131 words of extra memory for PDF output out of 10000 (max. 10000000)
 
